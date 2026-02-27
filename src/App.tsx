@@ -4,6 +4,7 @@ import { RegisterPage } from "@/features/auth/RegisterPage"
 import { ForgotPasswordPage } from "@/features/auth/ForgotPasswordPage"
 import { DashboardPage } from "./features/dashboard/DashboardPage"
 import { ProjectsPage } from "./features/projects/ProjectsPage"
+import { ProjectDetailPage } from "./features/projects/ProjectDetailPage"
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <Route path="/forgot-password" element={<ForgotPasswordPage />} />
         <Route path="/" element={<DashboardPage />} />
         <Route path="/projects" element={<ProjectsPage />} />
+        <Route path="/projects/:id" element={<ProjectDetailPage />} />
 
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
