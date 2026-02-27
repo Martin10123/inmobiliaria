@@ -1,7 +1,11 @@
-import { Bell, Search, Settings, User, LogOut, ChevronDown } from 'lucide-react'
+import { Bell, Search, Settings, User, LogOut, ChevronDown, Menu } from 'lucide-react'
 import { useState } from 'react'
 
-export const Navbar = () => {
+interface NavbarProps {
+  onMenuClick?: () => void
+}
+
+export const Navbar = ({ onMenuClick }: NavbarProps) => {
   const [showProfileMenu, setShowProfileMenu] = useState(false)
   const [showNotifications, setShowNotifications] = useState(false)
 
@@ -14,21 +18,29 @@ export const Navbar = () => {
   const unreadCount = notifications.filter(n => n.unread).length
 
   return (
-    <header className="h-16 bg-white border-b border-slate-200 flex items-center justify-between px-6 fixed top-0 right-0 left-64 z-40">
+    <header className="h-16 bg-white border-b border-slate-200 flex items-center justify-between px-4 md:px-6 fixed top-0 right-0 left-0 md:left-64 z-40">
+      {/* Botón de menú móvil */}
+      <button
+        onClick={onMenuClick}
+        className="md:hidden p-2 hover:bg-slate-100 rounded-lg transition-colors"
+      >
+        <Menu className="w-6 h-6 text-slate-700" />
+      </button>
+
       {/* Búsqueda */}
-      <div className="flex-1 max-w-xl">
+      <div className="flex-1 max-w-xl ml-2 md:ml-0">
         <div className="relative">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 w-5 h-5" />
           <input
             type="text"
-            placeholder="Buscar proyectos, clientes, productos..."
+            placeholder="Buscar..."
             className="w-full pl-10 pr-4 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
           />
         </div>
       </div>
 
       {/* Acciones de usuario */}
-      <div className="flex items-center gap-3 ml-6">
+      <div className="flex items-center gap-1 md:gap-3 ml-2 md:ml-6">
         {/* Notificaciones */}
         <div className="relative">
           <button
@@ -73,7 +85,7 @@ export const Navbar = () => {
         </div>
 
         {/* Configuración */}
-        <button className="p-2 hover:bg-slate-100 rounded-lg transition-colors">
+        <button className="hidden md:flex p-2 hover:bg-slate-100 rounded-lg transition-colors">
           <Settings className="w-5 h-5 text-slate-600" />
         </button>
 
@@ -84,16 +96,16 @@ export const Navbar = () => {
               setShowProfileMenu(!showProfileMenu)
               setShowNotifications(false)
             }}
-            className="flex items-center gap-3 pl-3 pr-2 py-1.5 hover:bg-slate-100 rounded-lg transition-colors"
+            className="flex items-center gap-2 md:gap-3 pl-2 md:pl-3 pr-1 md:pr-2 py-1.5 hover:bg-slate-100 rounded-lg transition-colors"
           >
-            <div className="text-right">
+            <div className="hidden md:block text-right">
               <p className="text-sm font-medium text-slate-900">Martín Simarra</p>
               <p className="text-xs text-slate-500">Administrador</p>
             </div>
             <div className="w-9 h-9 bg-linear-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white font-semibold">
               MS
             </div>
-            <ChevronDown className="w-4 h-4 text-slate-600" />
+            <ChevronDown className="hidden md:block w-4 h-4 text-slate-600" />
           </button>
 
           {/* Dropdown de perfil */}

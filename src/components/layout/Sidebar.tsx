@@ -6,7 +6,8 @@ import {
   FileCheck, 
   Settings,
   ChevronRight,
-  Zap
+  Zap,
+  X
 } from 'lucide-react'
 import { useState } from 'react'
 
@@ -17,6 +18,11 @@ interface MenuItem {
   path: string
   badge?: number
   children?: MenuItem[]
+}
+
+interface SidebarProps {
+  isOpen?: boolean
+  onClose?: () => void
 }
 
 const menuItems: MenuItem[] = [
@@ -66,7 +72,7 @@ const menuItems: MenuItem[] = [
   },
 ]
 
-export const Sidebar = () => {
+export const Sidebar = ({ isOpen = false, onClose }: SidebarProps) => {
   const [activeItem, setActiveItem] = useState('dashboard')
   const [expandedItems, setExpandedItems] = useState<string[]>([])
 
@@ -83,6 +89,10 @@ export const Sidebar = () => {
       toggleExpand(item.id)
     } else {
       setActiveItem(item.id)
+      // Cerrar sidebar en móvil al hacer click
+      if (onClose) {
+        onClose()
+      }
       // Aquí iría la navegación real
       // navigate(item.path)
     }
@@ -145,19 +155,41 @@ export const Sidebar = () => {
   }
 
   return (
-    <aside className="w-64 h-screen bg-white border-r border-slate-200 fixed left-0 top-0 z-50 flex flex-col">
-      {/* Logo y título */}
-      <div className="h-16 flex items-center px-6 border-b border-slate-200">
-        <div className="flex items-center gap-3">
-          <div className="w-8 h-8 bg-linear-to-br from-blue-600 to-purple-600 rounded-lg flex items-center justify-center">
-            <span className="text-white font-bold text-sm">N</span>
+    <>
+      {/* Backdrop/overlay para móvil */}
+      {isOpen && (
+        <div
+          onClick={onClose}
+          className="fixed inset-0 bg-black/50 z-40 md:hidden transition-opacity"
+        />
+      )}
+
+      {/* Sidebar */}
+      <aside className={`
+        w-64 h-screen bg-white border-r border-slate-200 fixed left-0 top-0 z-50 flex flex-col
+        transition-transform duration-300 ease-in-out
+        ${isOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'}
+      `}>
+        {/* Logo y título */}
+        <div className="h-16 flex items-center justify-between px-6 border-b border-slate-200">
+          <div className="flex items-center gap-3">
+            <div className="w-8 h-8 bg-linear-to-br from-blue-600 to-purple-600 rounded-lg flex items-center justify-center">
+              <span className="text-white font-bold text-sm">N</span>
+            </div>
+            <div>
+              <h1 className="text-lg font-bold text-slate-900">NEXUS ERP</h1>
+              <p className="text-xs text-slate-500">Sistema Modular</p>
+            </div>
           </div>
-          <div>
-            <h1 className="text-lg font-bold text-slate-900">NEXUS ERP</h1>
-            <p className="text-xs text-slate-500">Sistema Modular</p>
-          </div>
+          
+          {/* Botón cerrar móvil */}
+          <button
+            onClick={onClose}
+            className="md:hidden p-2 hover:bg-slate-100 rounded-lg transition-colors"
+          >
+            <X className="w-5 h-5 text-slate-600" />
+          </button>
         </div>
-      </div>
 
       {/* Navegación */}
       <nav className="flex-1 px-3 py-6 overflow-y-auto">
@@ -183,5 +215,6 @@ export const Sidebar = () => {
         </div>
       </div>
     </aside>
+    </>
   )
 }
