@@ -10,6 +10,7 @@ import {
   X
 } from 'lucide-react'
 import { useState } from 'react'
+import { useNavigate, useLocation } from 'react-router-dom'
 
 interface MenuItem {
   id: string
@@ -30,7 +31,7 @@ const menuItems: MenuItem[] = [
     id: 'dashboard',
     label: 'Dashboard',
     icon: <LayoutDashboard className="w-5 h-5" />,
-    path: '/dashboard',
+    path: '/',
   },
   {
     id: 'projects',
@@ -73,8 +74,17 @@ const menuItems: MenuItem[] = [
 ]
 
 export const Sidebar = ({ isOpen = false, onClose }: SidebarProps) => {
-  const [activeItem, setActiveItem] = useState('dashboard')
+  const navigate = useNavigate()
+  const location = useLocation()
   const [expandedItems, setExpandedItems] = useState<string[]>([])
+  
+  // Determinar el item activo basado en la ruta actual
+  const getActiveItemFromPath = (path: string) => {
+    const item = menuItems.find(item => item.path === path)
+    return item?.id || 'dashboard'
+  }
+  
+  const activeItem = getActiveItemFromPath(location.pathname)
 
   const toggleExpand = (itemId: string) => {
     setExpandedItems(prev =>
@@ -88,13 +98,12 @@ export const Sidebar = ({ isOpen = false, onClose }: SidebarProps) => {
     if (item.children && item.children.length > 0) {
       toggleExpand(item.id)
     } else {
-      setActiveItem(item.id)
+      // Navegar a la ruta
+      navigate(item.path)
       // Cerrar sidebar en móvil al hacer click
       if (onClose) {
         onClose()
       }
-      // Aquí iría la navegación real
-      // navigate(item.path)
     }
   }
 
