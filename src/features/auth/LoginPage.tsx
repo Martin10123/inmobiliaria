@@ -26,8 +26,8 @@ export const LoginPage = () => {
 
   return (
     <AuthLayout
-      title="Bienvenido"
-      subtitle="Inicia sesión en tu cuenta"
+      title="NEXUS ERP"
+      subtitle="Inicia sesión para gestionar proyectos, inventario y clientes"
       logo="login"
     >
       <form onSubmit={handleSubmit} className="space-y-5">
@@ -35,7 +35,7 @@ export const LoginPage = () => {
         <div className="space-y-2">
           <Label htmlFor="email">Correo electrónico</Label>
           <div className="relative">
-            <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-slate-400" />
+            <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-slate-500" />
             <Input
               id="email"
               type="email"
@@ -52,7 +52,7 @@ export const LoginPage = () => {
         <div className="space-y-2">
           <Label htmlFor="password">Contraseña</Label>
           <div className="relative">
-            <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-slate-400" />
+            <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-slate-500" />
             <Input
               id="password"
               type={showPassword ? "text" : "password"}
@@ -65,7 +65,7 @@ export const LoginPage = () => {
             <button
               type="button"
               onClick={() => setShowPassword(!showPassword)}
-              className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 transition-colors"
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-200 transition-colors"
             >
               {showPassword ? (
                 <EyeOff className="h-5 w-5" />
@@ -80,7 +80,7 @@ export const LoginPage = () => {
         <div className="flex justify-end">
           <Link
             to="/forgot-password"
-            className="text-sm text-cyan-600 hover:text-cyan-700 font-medium transition-colors"
+            className="text-sm text-blue-500 hover:opacity-80 font-medium transition-opacity"
           >
             ¿Olvidaste tu contraseña?
           </Link>
@@ -134,7 +134,7 @@ export const LoginPage = () => {
           ¿No tienes una cuenta?{" "}
           <Link
             to="/register"
-            className="text-cyan-600 hover:text-cyan-700 font-semibold transition-colors"
+            className="text-blue-500 hover:opacity-80 font-semibold transition-opacity"
           >
             Regístrate
           </Link>
