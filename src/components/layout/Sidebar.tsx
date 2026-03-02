@@ -7,7 +7,9 @@ import {
   Settings,
   ChevronRight,
   Zap,
-  X
+  X,
+  TrendingUp,
+  PieChart
 } from 'lucide-react'
 import { useState } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
@@ -51,6 +53,18 @@ const menuItems: MenuItem[] = [
     label: 'Clientes',
     icon: <Users className="w-5 h-5" />,
     path: '/customers',
+  },
+  {
+    id: 'pipeline',
+    label: 'Pipeline',
+    icon: <TrendingUp className="w-5 h-5" />,
+    path: '/pipeline',
+  },
+  {
+    id: 'segmentation',
+    label: 'Segmentación',
+    icon: <PieChart className="w-5 h-5" />,
+    path: '/segmentation',
   },
   {
     id: 'requests',

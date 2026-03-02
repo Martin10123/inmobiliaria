@@ -172,7 +172,7 @@ export const CustomerProjects = ({ customer }: CustomerProjectsProps) => {
                     
                     <td className="px-4 py-3">
                       <div className="flex items-center gap-2">
-                        <div className="flex-1 bg-slate-200 rounded-full h-2 max-w-[80px]">
+                        <div className="flex-1 bg-slate-200 rounded-full h-2 max-w-20">
                           <div
                             className="bg-blue-600 h-2 rounded-full"
                             style={{ width: `${project.progress}%` }}

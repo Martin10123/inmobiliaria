@@ -5,10 +5,10 @@ import { Plus } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import type { Customer, CustomerType, CustomerLevel, CustomerStatus } from '@/types'
 import { CustomerStats } from './components/CustomerStats'
+import { mockCustomers } from './data/mockCustomers'
 import { CustomerFilters } from './components/CustomerFilters'
 import { CustomerTable } from './components/CustomerTable'
 import { CustomerFormModal } from './components/CustomerFormModal'
-import { mockCustomers } from './data/mockCustomers'
 
 export const CustomersPage = () => {
   const navigate = useNavigate()

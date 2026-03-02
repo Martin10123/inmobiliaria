@@ -9,6 +9,8 @@ import InventoryPage from "./features/inventory/InventoryPage"
 import InventoryDetailPage from "./features/inventory/InventoryDetailPage"
 import { CustomersPage } from "./features/customers/CustomersPage"
 import { CustomerDetailPage } from "./features/customers/CustomerDetailPage"
+import { SalesPipelinePage } from "./features/customers/SalesPipelinePage"
+import { CustomerSegmentationPage } from "./features/customers/CustomerSegmentationPage"
 
 function App() {
   return (
@@ -24,6 +26,8 @@ function App() {
         <Route path="/inventory/:id" element={<InventoryDetailPage />} />
         <Route path="/customers" element={<CustomersPage />} />
         <Route path="/customers/:id" element={<CustomerDetailPage />} />
+        <Route path="/pipeline" element={<SalesPipelinePage />} />
+        <Route path="/segmentation" element={<CustomerSegmentationPage />} />
 
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>

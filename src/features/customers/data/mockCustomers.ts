@@ -55,16 +55,7 @@ export const mockCustomers: Customer[] = [
       deadlineComplianceRate: 88
     },
     
-    activeOpportunities: [
-      {
-        id: 'opp1',
-        name: 'Remodelación Sede Norte',
-        estimatedValue: 85000000,
-        closeProbability: 80,
-        stage: 'negotiation',
-        estimatedCloseDate: '2026-03-20'
-      }
-    ],
+    activeOpportunities: [],
     
     interactions: [
       {
@@ -313,16 +304,7 @@ export const mockCustomers: Customer[] = [
       deadlineComplianceRate: 100
     },
     
-    activeOpportunities: [
-      {
-        id: 'opp2',
-        name: 'Ampliación Casa Campestre',
-        estimatedValue: 35000000,
-        closeProbability: 65,
-        stage: 'proposal-sent',
-        estimatedCloseDate: '2026-03-30'
-      }
-    ],
+    activeOpportunities: [],
     
     interactions: [
       {
@@ -424,16 +406,7 @@ export const mockCustomers: Customer[] = [
       deadlineComplianceRate: 70
     },
     
-    activeOpportunities: [
-      {
-        id: 'opp3',
-        name: 'Parque Recreativo Municipal',
-        estimatedValue: 280000000,
-        closeProbability: 45,
-        stage: 'qualified',
-        estimatedCloseDate: '2026-05-15'
-      }
-    ],
+    activeOpportunities: [],
     
     interactions: [
       {

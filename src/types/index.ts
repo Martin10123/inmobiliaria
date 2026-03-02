@@ -315,11 +315,34 @@ export type NPSCategory = 'promoter' | 'passive' | 'detractor'
 export type DocumentStatus = 'active' | 'expired' | 'pending-renewal'
 export type CustomerDocumentType = 'contract' | 'quote' | 'invoice' | 'nda' | 'permit' | 'other'
 
+export type CustomerSegment = 
+  | 'champions' 
+  | 'loyal' 
+  | 'whales'
+  | 'at-risk' 
+  | 'hibernating'
+  | 'lost'
+  | 'new'
+  | 'potential'
+
+export interface SegmentDefinition {
+  id: CustomerSegment
+  name: string
+  description: string
+  color: string
+  bgColor: string
+  criteria: string
+  priority: 'low' | 'medium' | 'high' | 'critical'
+  actions: string[]
+}
+
 export interface User {
   id: string
   name: string
   email: string
   phone?: string
+  role?: string
+  avatar?: string
 }
 
 export interface RFMMetrics {
@@ -345,13 +368,50 @@ export interface CustomerProjects {
   deadlineComplianceRate: number // %
 }
 
+export type OpportunityStage = 
+  | 'lead' 
+  | 'prospect' 
+  | 'qualified' 
+  | 'proposal' 
+  | 'negotiation' 
+  | 'contract' 
+  | 'execution' 
+  | 'post-sale'
+
+export type NextActionType = 'meeting' | 'call' | 'email' | 'presentation' | 'follow-up' | 'other'
+
+export interface NextAction {
+  type: NextActionType
+  date: string
+  responsible: User
+  objective: string
+}
+
+export interface OpportunityChange {
+  date: string
+  change: string
+  user?: User
+}
+
 export interface Opportunity {
   id: string
   name: string
+  customerId: string
+  customerName: string
   estimatedValue: number
-  closeProbability: number
-  stage: string
+  closeProbability: number // 0-100
+  stage: OpportunityStage
   estimatedCloseDate: string
+  competitors: string[]
+  strengths: string[]
+  weaknesses: string[]
+  nextAction: NextAction
+  history: OpportunityChange[]
+  createdDate: string
+  assignedTo: User
+  tags: string[]
+  description: string
+  projectId?: string // Vinculado cuando se convierte en proyecto (contract/execution/post-sale)
 }
 
 export interface CustomerInteraction {

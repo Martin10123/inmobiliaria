@@ -3,11 +3,6 @@ import { useParams, useNavigate } from 'react-router-dom'
 import { MainLayout } from '@/layout/MainLayout'
 import { ArrowLeft, Edit2, Mail, Phone, Globe } from 'lucide-react'
 import { Button } from '@/components/ui/button'
-import { CustomerOverview } from './components/CustomerOverview'
-import { CustomerProjects } from './components/CustomerProjects'
-import { CustomerTimeline } from './components/CustomerTimeline'
-import { CustomerDocuments } from './components/CustomerDocuments'
-import { CustomerPredictions } from './components/CustomerPredictions'
 import { mockCustomers } from './data/mockCustomers'
 import {
   getCustomerTypeLabel,
@@ -18,6 +13,11 @@ import {
   getInitials,
   getAvatarColor
 } from './utils/customerHelpers'
+import { CustomerOverview } from './components/CustomerOverview'
+import { CustomerProjects } from './components/CustomerProjects'
+import { CustomerTimeline } from './components/CustomerTimeline'
+import { CustomerDocuments } from './components/CustomerDocuments'
+import { CustomerPredictions } from './components/CustomerPredictions'
 
 type TabType = 'overview' | 'projects' | 'timeline' | 'documents' | 'predictions'
 

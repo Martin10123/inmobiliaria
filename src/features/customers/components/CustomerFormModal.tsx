@@ -23,7 +23,7 @@ export const CustomerFormModal = ({ isOpen, onClose, customer }: CustomerFormMod
 
   return (
     <Modal isOpen={isOpen} onClose={onClose} title={isEdit ? 'Editar Cliente' : 'Nuevo Cliente'}>
-      <form onSubmit={handleSubmit} className="space-y-4">
+      <form onSubmit={handleSubmit} className="space-y-4 p-4">
         <div className="grid grid-cols-2 gap-4">
           {/* Nombre */}
           <div className="col-span-2">

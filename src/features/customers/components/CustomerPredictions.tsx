@@ -135,7 +135,7 @@ export const CustomerPredictions = ({ customer }: CustomerPredictionsProps) => {
               {predictions.suggestedServices.map((service, index) => (
                 <div
                   key={index}
-                  className="p-3 bg-gradient-to-br from-blue-50 to-purple-50 border border-blue-200 rounded-lg hover:shadow-md transition-shadow cursor-pointer"
+                  className="p-3 bg-linear-to-br from-blue-50 to-purple-50 border border-blue-200 rounded-lg hover:shadow-md transition-shadow cursor-pointer"
                 >
                   <div className="flex items-start justify-between">
                     <div>
@@ -151,14 +151,14 @@ export const CustomerPredictions = ({ customer }: CustomerPredictionsProps) => {
         )}
 
         {/* Recomendaciones de Acción */}
-        <div className="bg-gradient-to-br from-indigo-50 to-blue-50 border border-indigo-200 rounded-lg p-6">
+        <div className="bg-linear-to-br from-indigo-50 to-blue-50 border border-indigo-200 rounded-lg p-6">
           <h3 className="text-lg font-semibold text-slate-900 mb-4">
             🎯 Recomendaciones de Acción
           </h3>
           <div className="space-y-3">
             {churnRisk.level === 'high' && (
               <div className="flex items-start gap-3 p-3 bg-white rounded-lg border border-red-200">
-                <AlertTriangle className="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5" />
+                <AlertTriangle className="w-5 h-5 text-red-600 shrink-0 mt-0.5" />
                 <div>
                   <p className="text-sm font-medium text-slate-900">Acción Urgente Requerida</p>
                   <p className="text-xs text-slate-600 mt-1">
@@ -170,7 +170,7 @@ export const CustomerPredictions = ({ customer }: CustomerPredictionsProps) => {
             
             {customer.rfm.recency > 60 && (
               <div className="flex items-start gap-3 p-3 bg-white rounded-lg border border-yellow-200">
-                <Clock className="w-5 h-5 text-yellow-600 flex-shrink-0 mt-0.5" />
+                <Clock className="w-5 h-5 text-yellow-600 shrink-0 mt-0.5" />
                 <div>
                   <p className="text-sm font-medium text-slate-900">Re-engagement Necesario</p>
                   <p className="text-xs text-slate-600 mt-1">
@@ -182,7 +182,7 @@ export const CustomerPredictions = ({ customer }: CustomerPredictionsProps) => {
             
             {predictions.nextPurchaseDate && (
               <div className="flex items-start gap-3 p-3 bg-white rounded-lg border border-green-200">
-                <TrendingUp className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
+                <TrendingUp className="w-5 h-5 text-green-600 shrink-0 mt-0.5" />
                 <div>
                   <p className="text-sm font-medium text-slate-900">Oportunidad de Upselling</p>
                   <p className="text-xs text-slate-600 mt-1">
@@ -194,7 +194,7 @@ export const CustomerPredictions = ({ customer }: CustomerPredictionsProps) => {
             
             {customer.satisfactionScore >= 90 && customer.nps.category === 'promoter' && (
               <div className="flex items-start gap-3 p-3 bg-white rounded-lg border border-blue-200">
-                <Target className="w-5 h-5 text-blue-600 flex-shrink-0 mt-0.5" />
+                <Target className="w-5 h-5 text-blue-600 shrink-0 mt-0.5" />
                 <div>
                   <p className="text-sm font-medium text-slate-900">Cliente Promotor Activo</p>
                   <p className="text-xs text-slate-600 mt-1">
@@ -244,7 +244,7 @@ export const CustomerPredictions = ({ customer }: CustomerPredictionsProps) => {
         </div>
 
         {/* Score de Confianza IA */}
-        <div className="bg-gradient-to-br from-purple-50 to-pink-50 border border-purple-200 rounded-lg p-6">
+        <div className="bg-linear-to-br from-purple-50 to-pink-50 border border-purple-200 rounded-lg p-6">
           <h3 className="text-sm font-semibold text-slate-900 mb-2">Score de Confianza IA</h3>
           <p className="text-3xl font-bold text-purple-900 mb-1">{customer.rfm.score}/100</p>
           <p className="text-xs text-purple-700">
