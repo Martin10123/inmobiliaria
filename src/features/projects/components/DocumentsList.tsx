@@ -61,7 +61,7 @@ export const DocumentsList = ({ projectId }: DocumentsListProps) => {
           {Object.entries(documentsByType).map(([type, docs]) => (
             <div key={type}>
               <h4 className="text-sm font-semibold text-slate-700 mb-3 uppercase tracking-wide">
-                {getDocumentTypeLabel(type)} ({docs.length})
+                {getDocumentTypeLabel(type as import('@/types').DocumentType)} ({docs.length})
               </h4>
               
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">

@@ -1,4 +1,6 @@
 import { useNavigate } from 'react-router-dom'
+import { useMemo } from 'react'
+import type { ColumnDef } from '@tanstack/react-table'
 import {
   Calendar,
   TrendingUp,
@@ -6,10 +8,9 @@ import {
   Clock,
   PauseCircle,
   XCircle,
-  MoreVertical,
   Edit,
   Eye,
-  AlertCircle,
+  MoreVertical,
 } from 'lucide-react'
 import type { Project } from '@/types'
 import {
@@ -20,6 +21,7 @@ import {
   getPriorityLabel,
   getInitials,
 } from '../utils/projectHelpers'
+import { DataTable } from '@/components/ui/data-table'
 
 interface ProjectTableProps {
   projects: Project[]
@@ -44,155 +46,152 @@ export const ProjectTable = ({ projects, onEdit }: ProjectTableProps) => {
     }
   }
 
-  const handleRowClick = (projectId: string) => {
-    navigate(`/projects/${projectId}`)
+  const handleRowClick = (project: Project) => {
+    navigate(`/projects/${project.id}`)
   }
 
-  if (projects.length === 0) {
-    return (
-      <div className="bg-white rounded-lg shadow-sm border border-slate-200 p-12 text-center">
-        <AlertCircle className="w-12 h-12 text-slate-400 mx-auto mb-3" />
-        <p className="text-sm text-slate-600 font-medium">No se encontraron proyectos</p>
-        <p className="text-xs text-slate-500">Intenta ajustar los filtros de búsqueda</p>
-      </div>
-    )
-  }
+  const columns = useMemo<ColumnDef<Project>[]>(
+    () => [
+      {
+        accessorKey: 'name',
+        header: 'Proyecto',
+        cell: ({ row }) => (
+          <div>
+            <p className="text-sm font-medium text-slate-900">{row.original.name}</p>
+            <p className="text-xs text-slate-500">{row.original.code}</p>
+          </div>
+        ),
+      },
+      {
+        accessorKey: 'type',
+        header: 'Tipo',
+        cell: ({ row }) => (
+          <span className="text-xs text-slate-700">{getTypeLabel(row.original.type)}</span>
+        ),
+      },
+      {
+        accessorKey: 'status',
+        header: 'Estado',
+        cell: ({ row }) => (
+          <span
+            className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium ${getStatusColor(
+              row.original.status
+            )}`}
+          >
+            {getStatusIcon(row.original.status)}
+            {getStatusLabel(row.original.status)}
+          </span>
+        ),
+      },
+      {
+        accessorKey: 'progress',
+        header: 'Progreso',
+        cell: ({ row }) => (
+          <div className="flex items-center gap-2">
+            <div className="flex-1 bg-slate-200 rounded-full h-2 max-w-25">
+              <div
+                className="bg-blue-600 h-2 rounded-full transition-all"
+                style={{ width: `${row.original.progress}%` }}
+              />
+            </div>
+            <span className="text-xs text-slate-700 font-medium">{row.original.progress}%</span>
+          </div>
+        ),
+      },
+      {
+        accessorKey: 'priority',
+        header: 'Prioridad',
+        cell: ({ row }) => (
+          <span className={`text-xs font-medium ${getPriorityColor(row.original.priority)}`}>
+            {getPriorityLabel(row.original.priority)}
+          </span>
+        ),
+      },
+      {
+        accessorKey: 'managerName',
+        header: 'Responsable',
+        cell: ({ row }) => (
+          <div className="flex items-center gap-2">
+            <div className="w-8 h-8 rounded-full bg-slate-200 flex items-center justify-center">
+              <span className="text-xs font-medium text-slate-700">
+                {getInitials(row.original.managerName)}
+              </span>
+            </div>
+            <span className="text-xs text-slate-700">{row.original.managerName}</span>
+          </div>
+        ),
+      },
+      {
+        accessorKey: 'budget',
+        header: 'Presupuesto',
+        cell: ({ row }) => (
+          <div>
+            <p className="text-xs font-medium text-slate-900">
+              ${row.original.budget.toLocaleString()}
+            </p>
+            <p className="text-xs text-slate-500">
+              Gastado: ${row.original.currentCost.toLocaleString()}
+            </p>
+          </div>
+        ),
+      },
+      {
+        accessorKey: 'plannedEndDate',
+        header: 'Fechas',
+        cell: ({ row }) => (
+          <div className="flex items-center gap-1.5 text-xs text-slate-600">
+            <Calendar className="w-4 h-4" />
+            <span>{new Date(row.original.plannedEndDate).toLocaleDateString('es-ES')}</span>
+          </div>
+        ),
+      },
+      {
+        id: 'actions',
+        header: () => <div className="text-center">Acciones</div>,
+        cell: ({ row }) => (
+          <div className="flex items-center justify-center gap-2">
+            <button
+              onClick={(e) => {
+                e.stopPropagation()
+                handleRowClick(row.original)
+              }}
+              className="p-1.5 hover:bg-slate-100 rounded-lg transition-colors"
+              title="Ver detalles"
+            >
+              <Eye className="w-4 h-4 text-slate-600" />
+            </button>
+            <button
+              onClick={(e) => {
+                e.stopPropagation()
+                onEdit(row.original)
+              }}
+              className="p-1.5 hover:bg-slate-100 rounded-lg transition-colors"
+              title="Editar"
+            >
+              <Edit className="w-4 h-4 text-slate-600" />
+            </button>
+            <button
+              onClick={(e) => e.stopPropagation()}
+              className="p-1.5 hover:bg-slate-100 rounded-lg transition-colors"
+              title="Más opciones"
+            >
+              <MoreVertical className="w-4 h-4 text-slate-600" />
+            </button>
+          </div>
+        ),
+      },
+    ],
+    [navigate, onEdit]
+  )
 
   return (
-    <div className="bg-white rounded-lg shadow-sm border border-slate-200 overflow-hidden">
-      <div className="overflow-x-auto">
-        <table className="w-full">
-          <thead className="bg-slate-50 border-b border-slate-200">
-            <tr>
-              <th className="text-left px-6 py-3 text-xs font-medium text-slate-600 uppercase tracking-wider">
-                Proyecto
-              </th>
-              <th className="text-left px-6 py-3 text-xs font-medium text-slate-600 uppercase tracking-wider">
-                Tipo
-              </th>
-              <th className="text-left px-6 py-3 text-xs font-medium text-slate-600 uppercase tracking-wider">
-                Estado
-              </th>
-              <th className="text-left px-6 py-3 text-xs font-medium text-slate-600 uppercase tracking-wider">
-                Progreso
-              </th>
-              <th className="text-left px-6 py-3 text-xs font-medium text-slate-600 uppercase tracking-wider">
-                Prioridad
-              </th>
-              <th className="text-left px-6 py-3 text-xs font-medium text-slate-600 uppercase tracking-wider">
-                Responsable
-              </th>
-              <th className="text-left px-6 py-3 text-xs font-medium text-slate-600 uppercase tracking-wider">
-                Presupuesto
-              </th>
-              <th className="text-left px-6 py-3 text-xs font-medium text-slate-600 uppercase tracking-wider">
-                Fechas
-              </th>
-              <th className="text-center px-6 py-3 text-xs font-medium text-slate-600 uppercase tracking-wider">
-                Acciones
-              </th>
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-slate-200">
-            {projects.map((project) => (
-              <tr 
-                key={project.id} 
-                className="hover:bg-slate-50 transition-colors cursor-pointer"
-                onClick={() => handleRowClick(project.id)}
-              >
-                <td className="px-6 py-4">
-                  <div>
-                    <p className="text-sm font-medium text-slate-900">{project.name}</p>
-                    <p className="text-xs text-slate-500">{project.code}</p>
-                  </div>
-                </td>
-                <td className="px-6 py-4">
-                  <span className="text-xs text-slate-700">{getTypeLabel(project.type)}</span>
-                </td>
-                <td className="px-6 py-4">
-                  <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium ${getStatusColor(project.status)}`}>
-                    {getStatusIcon(project.status)}
-                    {getStatusLabel(project.status)}
-                  </span>
-                </td>
-                <td className="px-6 py-4">
-                  <div className="flex items-center gap-2">
-                    <div className="flex-1 bg-slate-200 rounded-full h-2 max-w-25">
-                      <div
-                        className="bg-blue-600 h-2 rounded-full transition-all"
-                        style={{ width: `${project.progress}%` }}
-                      />
-                    </div>
-                    <span className="text-xs text-slate-700 font-medium">{project.progress}%</span>
-                  </div>
-                </td>
-                <td className="px-6 py-4">
-                  <span className={`text-xs font-medium ${getPriorityColor(project.priority)}`}>
-                    {getPriorityLabel(project.priority)}
-                  </span>
-                </td>
-                <td className="px-6 py-4">
-                  <div className="flex items-center gap-2">
-                    <div className="w-8 h-8 rounded-full bg-slate-200 flex items-center justify-center">
-                      <span className="text-xs font-medium text-slate-700">
-                        {getInitials(project.managerName)}
-                      </span>
-                    </div>
-                    <span className="text-xs text-slate-700">{project.managerName}</span>
-                  </div>
-                </td>
-                <td className="px-6 py-4">
-                  <div>
-                    <p className="text-xs font-medium text-slate-900">
-                      ${project.budget.toLocaleString()}
-                    </p>
-                    <p className="text-xs text-slate-500">
-                      Gastado: ${project.currentCost.toLocaleString()}
-                    </p>
-                  </div>
-                </td>
-                <td className="px-6 py-4">
-                  <div className="flex items-center gap-1.5 text-xs text-slate-600">
-                    <Calendar className="w-4 h-4" />
-                    <span>{new Date(project.plannedEndDate).toLocaleDateString('es-ES')}</span>
-                  </div>
-                </td>
-                <td className="px-6 py-4">
-                  <div className="flex items-center justify-center gap-2">
-                    <button
-                      onClick={(e) => {
-                        e.stopPropagation()
-                        handleRowClick(project.id)
-                      }}
-                      className="p-1.5 hover:bg-slate-100 rounded-lg transition-colors"
-                      title="Ver detalles"
-                    >
-                      <Eye className="w-4 h-4 text-slate-600" />
-                    </button>
-                    <button
-                      onClick={(e) => {
-                        e.stopPropagation()
-                        onEdit(project)
-                      }}
-                      className="p-1.5 hover:bg-slate-100 rounded-lg transition-colors"
-                      title="Editar"
-                    >
-                      <Edit className="w-4 h-4 text-slate-600" />
-                    </button>
-                    <button
-                      onClick={(e) => e.stopPropagation()}
-                      className="p-1.5 hover:bg-slate-100 rounded-lg transition-colors"
-                      title="Más opciones"
-                    >
-                      <MoreVertical className="w-4 h-4 text-slate-600" />
-                    </button>
-                  </div>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-    </div>
+    <DataTable
+      columns={columns}
+      data={projects}
+      pageSize={10}
+      onRowClick={handleRowClick}
+      emptyMessage="No se encontraron proyectos. Intenta ajustar los filtros de búsqueda."
+    />
   )
 }
+

@@ -13,12 +13,12 @@ export const TeamSection = ({ projectId }: TeamSectionProps) => {
   )
 
   const roleColors = {
-    project_manager: 'bg-purple-100 text-purple-700 border-purple-200',
+    manager: 'bg-purple-100 text-purple-700 border-purple-200',
     architect: 'bg-blue-100 text-blue-700 border-blue-200',
     engineer: 'bg-cyan-100 text-cyan-700 border-cyan-200',
     contractor: 'bg-orange-100 text-orange-700 border-orange-200',
     supervisor: 'bg-green-100 text-green-700 border-green-200',
-    worker: 'bg-slate-100 text-slate-700 border-slate-200',
+    other: 'bg-slate-100 text-slate-700 border-slate-200',
   }
 
   const membersByRole = teamMembers.reduce((acc, member) => {
@@ -57,7 +57,7 @@ export const TeamSection = ({ projectId }: TeamSectionProps) => {
           {Object.entries(membersByRole).map(([role, members]) => (
             <div key={role}>
               <h4 className="text-sm font-semibold text-slate-700 mb-4 uppercase tracking-wide">
-                {getTeamRoleLabel(role)} ({members.length})
+                {getTeamRoleLabel(role as import('@/types').TeamRole)} ({members.length})
               </h4>
               
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">

@@ -1,3 +1,5 @@
+import { useMemo } from 'react'
+import type { ColumnDef } from '@tanstack/react-table'
 import type { InventoryMovement } from '../../../types'
 import { 
   ArrowUpCircle,
@@ -14,6 +16,7 @@ import {
   formatNumber
 } from '../utils/inventoryHelpers'
 import { mockMovements } from '../data/mockMovements'
+import { DataTable } from '../../../components/ui/data-table'
 
 interface MovementHistoryProps {
   itemId: string
@@ -52,6 +55,83 @@ export default function MovementHistory({ itemId }: MovementHistoryProps) {
       </span>
     )
   }
+
+  const columns = useMemo<ColumnDef<InventoryMovement>[]>(
+    () => [
+      {
+        accessorKey: 'type',
+        header: 'Tipo',
+        cell: ({ row }) => (
+          <div className="flex items-center gap-2">
+            {getMovementIcon(row.original.type)}
+            <span className={`text-sm font-medium ${getMovementTypeColor(row.original.type)}`}>
+              {getMovementTypeLabel(row.original.type)}
+            </span>
+          </div>
+        ),
+      },
+      {
+        accessorKey: 'quantity',
+        header: 'Cantidad',
+        cell: ({ row }) => (
+          <div className="text-sm">
+            {getQuantityDisplay(row.original)}
+          </div>
+        ),
+      },
+      {
+        id: 'stock',
+        header: 'Stock',
+        cell: ({ row }) => (
+          <div className="text-sm text-gray-900">
+            <span className="text-gray-500">{formatNumber(row.original.previousStock)}</span>
+            <span className="mx-2 text-gray-400">→</span>
+            <span className="font-semibold">{formatNumber(row.original.newStock)}</span>
+          </div>
+        ),
+      },
+      {
+        accessorKey: 'reason',
+        header: 'Motivo',
+        cell: ({ row }) => (
+          <div>
+            <div className="text-sm text-gray-900">{row.original.reason}</div>
+            {row.original.notes && (
+              <div className="text-xs text-gray-500 mt-1">{row.original.notes}</div>
+            )}
+          </div>
+        ),
+      },
+      {
+        accessorKey: 'reference',
+        header: 'Referencia',
+        cell: ({ row }) => (
+          row.original.reference ? (
+            <span className="text-sm font-mono bg-gray-100 px-2 py-1 rounded text-gray-700">
+              {row.original.reference}
+            </span>
+          ) : (
+            <span className="text-sm text-gray-400">-</span>
+          )
+        ),
+      },
+      {
+        accessorKey: 'userName',
+        header: 'Usuario',
+        cell: ({ row }) => (
+          <div className="text-sm text-gray-900">{row.original.userName}</div>
+        ),
+      },
+      {
+        accessorKey: 'createdAt',
+        header: 'Fecha',
+        cell: ({ row }) => (
+          <div className="text-sm text-gray-900">{formatDateTime(row.original.createdAt)}</div>
+        ),
+      },
+    ],
+    []
+  )
 
   if (movements.length === 0) {
     return (
@@ -114,84 +194,12 @@ export default function MovementHistory({ itemId }: MovementHistoryProps) {
       </div>
 
       {/* Tabla de Movimientos */}
-      <div className="bg-white border border-gray-200 rounded-lg overflow-hidden">
-        <div className="overflow-x-auto">
-          <table className="w-full">
-            <thead className="bg-gray-50 border-b border-gray-200">
-              <tr>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Tipo
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Cantidad
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Stock
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Motivo
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Referencia
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Usuario
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Fecha
-                </th>
-              </tr>
-            </thead>
-            <tbody className="bg-white divide-y divide-gray-200">
-              {movements.map((movement) => (
-                <tr key={movement.id} className="hover:bg-gray-50">
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="flex items-center gap-2">
-                      {getMovementIcon(movement.type)}
-                      <span className={`text-sm font-medium ${getMovementTypeColor(movement.type)}`}>
-                        {getMovementTypeLabel(movement.type)}
-                      </span>
-                    </div>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="text-sm">
-                      {getQuantityDisplay(movement)}
-                    </div>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="text-sm text-gray-900">
-                      <span className="text-gray-500">{formatNumber(movement.previousStock)}</span>
-                      <span className="mx-2 text-gray-400">→</span>
-                      <span className="font-semibold">{formatNumber(movement.newStock)}</span>
-                    </div>
-                  </td>
-                  <td className="px-6 py-4">
-                    <div className="text-sm text-gray-900">{movement.reason}</div>
-                    {movement.notes && (
-                      <div className="text-xs text-gray-500 mt-1">{movement.notes}</div>
-                    )}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    {movement.reference ? (
-                      <span className="text-sm font-mono bg-gray-100 px-2 py-1 rounded text-gray-700">
-                        {movement.reference}
-                      </span>
-                    ) : (
-                      <span className="text-sm text-gray-400">-</span>
-                    )}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="text-sm text-gray-900">{movement.userName}</div>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="text-sm text-gray-900">{formatDateTime(movement.createdAt)}</div>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </div>
+      <DataTable
+        columns={columns}
+        data={movements}
+        pageSize={10}
+        emptyMessage="No hay movimientos registrados para este item"
+      />
 
       {/* Resumen */}
       <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">

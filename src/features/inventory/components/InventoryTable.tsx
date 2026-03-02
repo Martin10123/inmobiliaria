@@ -1,3 +1,5 @@
+import { useMemo } from 'react'
+import type { ColumnDef } from '@tanstack/react-table'
 import type { InventoryItem } from '../../../types'
 import {
   formatCurrency,
@@ -10,6 +12,7 @@ import {
   getStockLevelColor
 } from '../utils/inventoryHelpers'
 import { Edit, Trash2, Eye } from 'lucide-react'
+import { DataTable } from '../../../components/ui/data-table'
 
 interface InventoryTableProps {
   items: InventoryItem[]
@@ -24,141 +27,164 @@ export default function InventoryTable({
   onDelete,
   onView
 }: InventoryTableProps) {
-  if (items.length === 0) {
-    return (
-      <div className="bg-white rounded-lg shadow border border-gray-200 p-8 text-center">
-        <p className="text-gray-500">No se encontraron items en el inventario</p>
-      </div>
-    )
-  }
+  const columns = useMemo<ColumnDef<InventoryItem>[]>(
+    () => [
+      {
+        accessorKey: 'code',
+        header: 'Código',
+        cell: ({ row }) => (
+          <div className="text-sm font-medium text-gray-900">
+            {row.original.code}
+          </div>
+        ),
+      },
+      {
+        accessorKey: 'name',
+        header: 'Nombre',
+        cell: ({ row }) => (
+          <div>
+            <div className="text-sm font-medium text-gray-900">
+              {row.original.name}
+            </div>
+            <div className="text-sm text-gray-500 truncate max-w-xs">
+              {row.original.description}
+            </div>
+          </div>
+        ),
+      },
+      {
+        accessorKey: 'category',
+        header: 'Categoría',
+        cell: ({ row }) => (
+          <span
+            className={`px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full ${getCategoryColor(
+              row.original.category
+            )}`}
+          >
+            {getCategoryLabel(row.original.category)}
+          </span>
+        ),
+      },
+      {
+        accessorKey: 'status',
+        header: 'Estado',
+        cell: ({ row }) => (
+          <span
+            className={`px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full ${getStatusColor(
+              row.original.status
+            )}`}
+          >
+            {getStatusLabel(row.original.status)}
+          </span>
+        ),
+      },
+      {
+        accessorKey: 'stock',
+        header: 'Stock',
+        cell: ({ row }) => (
+          <div>
+            <div className="flex items-center gap-2">
+              <span
+                className={`px-2 py-1 text-xs font-medium rounded ${getStockLevelColor(
+                  row.original.stock,
+                  row.original.minStock
+                )}`}
+              >
+                {getStockLevelIcon(row.original.stock, row.original.minStock)}{' '}
+                {formatNumber(row.original.stock)} {row.original.unit}
+              </span>
+            </div>
+            <div className="text-xs text-gray-500 mt-1">
+              Mín: {formatNumber(row.original.minStock)}
+            </div>
+          </div>
+        ),
+      },
+      {
+        accessorKey: 'location',
+        header: 'Ubicación',
+        cell: ({ row }) => (
+          <div>
+            <div className="text-sm text-gray-900">{row.original.location}</div>
+            {row.original.warehouse && (
+              <div className="text-xs text-gray-500">{row.original.warehouse}</div>
+            )}
+          </div>
+        ),
+      },
+      {
+        accessorKey: 'unitPrice',
+        header: 'Valor Unit.',
+        cell: ({ row }) => (
+          <div className="text-sm text-gray-900">
+            {formatCurrency(row.original.unitPrice)}
+          </div>
+        ),
+      },
+      {
+        accessorKey: 'totalValue',
+        header: 'Valor Total',
+        cell: ({ row }) => (
+          <div className="text-sm font-medium text-gray-900">
+            {formatCurrency(row.original.totalValue)}
+          </div>
+        ),
+      },
+      {
+        id: 'actions',
+        header: 'Acciones',
+        cell: ({ row }) => (
+          <div className="flex items-center gap-2">
+            {onView && (
+              <button
+                onClick={(e) => {
+                  e.stopPropagation()
+                  onView(row.original)
+                }}
+                className="text-blue-600 hover:text-blue-900"
+                title="Ver detalles"
+              >
+                <Eye className="w-4 h-4" />
+              </button>
+            )}
+            {onEdit && (
+              <button
+                onClick={(e) => {
+                  e.stopPropagation()
+                  onEdit(row.original)
+                }}
+                className="text-green-600 hover:text-green-900"
+                title="Editar"
+              >
+                <Edit className="w-4 h-4" />
+              </button>
+            )}
+            {onDelete && (
+              <button
+                onClick={(e) => {
+                  e.stopPropagation()
+                  onDelete(row.original)
+                }}
+                className="text-red-600 hover:text-red-900"
+                title="Eliminar"
+              >
+                <Trash2 className="w-4 h-4" />
+              </button>
+            )}
+          </div>
+        ),
+      },
+    ],
+    [onEdit, onDelete, onView]
+  )
 
   return (
-    <div className="bg-white rounded-lg shadow border border-gray-200 overflow-hidden">
-      <div className="overflow-x-auto">
-        <table className="w-full">
-          <thead className="bg-gray-50 border-b border-gray-200">
-            <tr>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Código
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Nombre
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Categoría
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Estado
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Stock
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Ubicación
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Valor Unit.
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Valor Total
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Acciones
-              </th>
-            </tr>
-          </thead>
-          <tbody className="bg-white divide-y divide-gray-200">
-            {items.map((item) => (
-              <tr key={item.id} className="hover:bg-gray-50">
-                <td className="px-6 py-4 whitespace-nowrap">
-                  <div className="text-sm font-medium text-gray-900">
-                    {item.code}
-                  </div>
-                </td>
-                <td className="px-6 py-4">
-                  <div className="text-sm font-medium text-gray-900">
-                    {item.name}
-                  </div>
-                  <div className="text-sm text-gray-500 truncate max-w-xs">
-                    {item.description}
-                  </div>
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  <span
-                    className={`px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full ${getCategoryColor(item.category)}`}
-                  >
-                    {getCategoryLabel(item.category)}
-                  </span>
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  <span
-                    className={`px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full ${getStatusColor(item.status)}`}
-                  >
-                    {getStatusLabel(item.status)}
-                  </span>
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  <div className="flex items-center gap-2">
-                    <span className={`px-2 py-1 text-xs font-medium rounded ${getStockLevelColor(item.stock, item.minStock)}`}>
-                      {getStockLevelIcon(item.stock, item.minStock)} {formatNumber(item.stock)} {item.unit}
-                    </span>
-                  </div>
-                  <div className="text-xs text-gray-500 mt-1">
-                    Mín: {formatNumber(item.minStock)}
-                  </div>
-                </td>
-                <td className="px-6 py-4">
-                  <div className="text-sm text-gray-900">{item.location}</div>
-                  {item.warehouse && (
-                    <div className="text-xs text-gray-500">{item.warehouse}</div>
-                  )}
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  <div className="text-sm text-gray-900">
-                    {formatCurrency(item.unitPrice)}
-                  </div>
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  <div className="text-sm font-medium text-gray-900">
-                    {formatCurrency(item.totalValue)}
-                  </div>
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  <div className="flex items-center gap-2">
-                    {onView && (
-                      <button
-                        onClick={() => onView(item)}
-                        className="text-blue-600 hover:text-blue-900"
-                        title="Ver detalles"
-                      >
-                        <Eye className="w-4 h-4" />
-                      </button>
-                    )}
-                    {onEdit && (
-                      <button
-                        onClick={() => onEdit(item)}
-                        className="text-green-600 hover:text-green-900"
-                        title="Editar"
-                      >
-                        <Edit className="w-4 h-4" />
-                      </button>
-                    )}
-                    {onDelete && (
-                      <button
-                        onClick={() => onDelete(item)}
-                        className="text-red-600 hover:text-red-900"
-                        title="Eliminar"
-                      >
-                        <Trash2 className="w-4 h-4" />
-                      </button>
-                    )}
-                  </div>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-    </div>
+    <DataTable
+      columns={columns}
+      data={items}
+      pageSize={10}
+      emptyMessage="No se encontraron items en el inventario"
+    />
   )
 }
+

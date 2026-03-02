@@ -53,7 +53,7 @@ export const ProjectTimeline = ({ projectId }: ProjectTimelineProps) => {
   const stats = {
     total: projectPhases.length,
     completed: projectPhases.filter(p => p.status === 'completed').length,
-    inProgress: projectPhases.filter(p => p.status === 'in-progress').length,
+    inProgress: projectPhases.filter(p => p.status === 'active').length,
     pending: projectPhases.filter(p => p.status === 'pending').length,
   }
 
@@ -104,8 +104,7 @@ export const ProjectTimeline = ({ projectId }: ProjectTimelineProps) => {
                       <div
                         className={`absolute h-full ${
                           phase.status === 'completed' ? 'bg-green-500' :
-                          phase.status === 'in-progress' ? 'bg-blue-500' :
-                          phase.status === 'cancelled' ? 'bg-red-500' :
+                          phase.status === 'active' ? 'bg-blue-500' :
                           'bg-slate-400'
                         } transition-all duration-500`}
                         style={{ 
@@ -149,8 +148,7 @@ export const ProjectTimeline = ({ projectId }: ProjectTimelineProps) => {
                           <span className={`inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-medium ${getPhaseStatusColor(phase.status)}`}>
                             {getStatusIcon(phase.status)}
                             {phase.status === 'completed' ? 'Completada' :
-                             phase.status === 'in-progress' ? 'En Progreso' :
-                             phase.status === 'cancelled' ? 'Cancelada' :
+                             phase.status === 'active' ? 'En Progreso' :
                              'Pendiente'}
                           </span>
                         </div>

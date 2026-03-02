@@ -6,7 +6,6 @@ import {
   Edit,
   Calendar,
   DollarSign,
-  MapPin,
   Users,
   FileText,
   Activity,

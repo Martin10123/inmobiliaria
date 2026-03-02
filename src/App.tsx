@@ -7,6 +7,8 @@ import { ProjectsPage } from "./features/projects/ProjectsPage"
 import { ProjectDetailPage } from "./features/projects/ProjectDetailPage"
 import InventoryPage from "./features/inventory/InventoryPage"
 import InventoryDetailPage from "./features/inventory/InventoryDetailPage"
+import { CustomersPage } from "./features/customers/CustomersPage"
+import { CustomerDetailPage } from "./features/customers/CustomerDetailPage"
 
 function App() {
   return (
@@ -20,6 +22,8 @@ function App() {
         <Route path="/projects/:id" element={<ProjectDetailPage />} />
         <Route path="/inventory" element={<InventoryPage />} />
         <Route path="/inventory/:id" element={<InventoryDetailPage />} />
+        <Route path="/customers" element={<CustomersPage />} />
+        <Route path="/customers/:id" element={<CustomerDetailPage />} />
 
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>

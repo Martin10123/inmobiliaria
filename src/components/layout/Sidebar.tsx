@@ -50,7 +50,7 @@ const menuItems: MenuItem[] = [
     id: 'clients',
     label: 'Clientes',
     icon: <Users className="w-5 h-5" />,
-    path: '/clients',
+    path: '/customers',
   },
   {
     id: 'requests',

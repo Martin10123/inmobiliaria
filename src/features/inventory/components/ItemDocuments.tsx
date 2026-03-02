@@ -114,7 +114,7 @@ export default function ItemDocuments({ itemId }: ItemDocumentsProps) {
         {documents.map((doc) => (
           <div key={doc.id} className="bg-white border border-gray-200 rounded-lg p-4 hover:border-blue-300 transition-colors">
             <div className="flex items-start gap-3">
-              <div className="flex-shrink-0">
+              <div className="shrink-0">
                 {getDocumentIcon(doc.type)}
               </div>
               

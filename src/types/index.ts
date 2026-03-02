@@ -300,3 +300,164 @@ export interface InventoryMovement {
   createdAt: string
   notes?: string
 }
+
+// ============================================
+// CRM (Clientes) Types
+// ============================================
+
+export type CustomerType = 'individual' | 'small-business' | 'corporate' | 'government'
+export type CustomerLevel = 'bronze' | 'silver' | 'gold' | 'platinum' | 'vip'
+export type CustomerSource = 'referral' | 'marketing' | 'web' | 'event' | 'cold-call' | 'other'
+export type CustomerStatus = 'active' | 'inactive' | 'at-risk' | 'lost'
+export type InteractionType = 'meeting' | 'call' | 'email' | 'quote' | 'contract' | 'payment' | 'complaint' | 'follow-up'
+export type InteractionSentiment = 'positive' | 'neutral' | 'negative'
+export type NPSCategory = 'promoter' | 'passive' | 'detractor'
+export type DocumentStatus = 'active' | 'expired' | 'pending-renewal'
+export type CustomerDocumentType = 'contract' | 'quote' | 'invoice' | 'nda' | 'permit' | 'other'
+
+export interface User {
+  id: string
+  name: string
+  email: string
+  phone?: string
+}
+
+export interface RFMMetrics {
+  recency: number // días desde último contacto
+  frequency: number // número total de proyectos
+  monetary: number // valor total histórico
+  score: number // calculado de 0-100
+}
+
+export interface NPSData {
+  lastSurvey?: string
+  score?: number // 0-10
+  category?: NPSCategory
+  comments: string[]
+}
+
+export interface CustomerProjects {
+  total: number
+  active: number
+  completed: number
+  cancelled: number
+  budgetComplianceRate: number // %
+  deadlineComplianceRate: number // %
+}
+
+export interface Opportunity {
+  id: string
+  name: string
+  estimatedValue: number
+  closeProbability: number
+  stage: string
+  estimatedCloseDate: string
+}
+
+export interface CustomerInteraction {
+  id: string
+  type: InteractionType
+  date: string
+  user: User
+  description: string
+  sentiment?: InteractionSentiment
+  tags: string[]
+  attachments: string[]
+}
+
+export interface CustomerPredictions {
+  churnProbability: number // 0-1
+  nextPurchaseDate?: string
+  nextPurchaseValue?: number
+  suggestedServices: string[]
+  bestContactTime?: string
+  churnReasons?: string[]
+}
+
+export interface CustomerDocument {
+  id: string
+  name: string
+  type: CustomerDocumentType
+  issueDate: string
+  expiryDate?: string
+  status: DocumentStatus
+  filePath: string
+  size: number
+  uploadedBy: User
+}
+
+export interface Customer {
+  id: string
+  name: string
+  type: CustomerType
+  nit?: string
+  phone: string
+  email: string
+  address: string
+  city: string
+  country: string
+  website?: string
+  
+  // Clasificación
+  level: CustomerLevel
+  source: CustomerSource
+  accountExecutive: User
+  
+  // Métricas RFM
+  rfm: RFMMetrics
+  
+  // Financiero
+  clv: number // Customer Lifetime Value
+  historicRevenue: number
+  projectedRevenue: number
+  pendingDebt: number
+  creditLimit: number
+  
+  // Satisfacción
+  nps: NPSData
+  satisfactionScore: number // 0-100
+  
+  // Proyectos
+  projects: CustomerProjects
+  
+  // Oportunidades
+  activeOpportunities: Opportunity[]
+  
+  // Interacciones
+  interactions: CustomerInteraction[]
+  
+  // Predicciones IA
+  predictions: CustomerPredictions
+  
+  // Segmentación
+  segment: string
+  tags: string[]
+  
+  // Documentos
+  documents: CustomerDocument[]
+  
+  // Auditoría
+  registrationDate: string
+  lastInteraction?: string
+  status: CustomerStatus
+  createdBy: User
+  modifiedBy: User
+  lastModified: string
+}
+
+export interface CustomerFormData {
+  name: string
+  type: CustomerType
+  nit?: string
+  phone: string
+  email: string
+  address: string
+  city: string
+  country: string
+  website?: string
+  level: CustomerLevel
+  source: CustomerSource
+  accountExecutiveId: string
+  creditLimit: number
+  tags: string[]
+}
