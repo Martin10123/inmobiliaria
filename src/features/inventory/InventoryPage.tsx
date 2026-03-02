@@ -1,4 +1,5 @@
 import { useState, useMemo } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { Plus } from 'lucide-react'
 import { MainLayout } from '@/layout/MainLayout'
 import type { InventoryItem, InventoryFormData, InventoryCategory, InventoryStatus } from '../../types'
@@ -9,6 +10,7 @@ import InventoryFormModal from './components/InventoryFormModal'
 import { mockInventory } from './data/mockInventory'
 
 export default function InventoryPage() {
+  const navigate = useNavigate()
   const [items, setItems] = useState<InventoryItem[]>(mockInventory)
   const [searchTerm, setSearchTerm] = useState('')
   const [selectedCategory, setSelectedCategory] = useState<InventoryCategory | 'all'>('all')
@@ -99,6 +101,10 @@ export default function InventoryPage() {
     setIsModalOpen(true)
   }
 
+  const handleViewClick = (item: InventoryItem) => {
+    navigate(`/inventory/${item.id}`)
+  }
+
   const handleModalClose = () => {
     setIsModalOpen(false)
     setEditingItem(null)
@@ -148,6 +154,7 @@ export default function InventoryPage() {
         {/* Tabla */}
         <InventoryTable
           items={filteredItems}
+          onView={handleViewClick}
           onEdit={handleEditClick}
           onDelete={handleDeleteItem}
         />

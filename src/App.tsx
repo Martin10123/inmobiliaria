@@ -6,6 +6,7 @@ import { DashboardPage } from "./features/dashboard/DashboardPage"
 import { ProjectsPage } from "./features/projects/ProjectsPage"
 import { ProjectDetailPage } from "./features/projects/ProjectDetailPage"
 import InventoryPage from "./features/inventory/InventoryPage"
+import InventoryDetailPage from "./features/inventory/InventoryDetailPage"
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
         <Route path="/projects" element={<ProjectsPage />} />
         <Route path="/projects/:id" element={<ProjectDetailPage />} />
         <Route path="/inventory" element={<InventoryPage />} />
+        <Route path="/inventory/:id" element={<InventoryDetailPage />} />
 
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
