@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import type { Project, ProjectFormData, Client, Contract, ProjectType, ProjectStatus, Priority } from '@/types'
+import { useModal } from '@/hooks/useModal'
 
 interface ProjectFormModalProps {
   isOpen: boolean
@@ -36,6 +37,8 @@ const mockManagers = [
 ]
 
 export const ProjectFormModal = ({ isOpen, onClose, project }: ProjectFormModalProps) => {
+  const { contentRef, handleBackdropClick } = useModal({ isOpen, onClose })
+  
   const [formData, setFormData] = useState<ProjectFormData>({
     name: '',
     description: '',
@@ -125,8 +128,14 @@ export const ProjectFormModal = ({ isOpen, onClose, project }: ProjectFormModalP
   if (!isOpen) return null
 
   return (
-    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-      <div className="bg-white rounded-xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-hidden">
+    <div 
+      className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4"
+      onClick={handleBackdropClick}
+    >
+      <div 
+        ref={contentRef}
+        className="bg-white rounded-xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-hidden"
+      >
         {/* Header */}
         <div className="flex items-center justify-between px-6 py-4 border-b border-slate-200 bg-slate-50">
           <div className="flex items-center gap-3">

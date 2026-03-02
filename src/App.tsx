@@ -5,6 +5,7 @@ import { ForgotPasswordPage } from "@/features/auth/ForgotPasswordPage"
 import { DashboardPage } from "./features/dashboard/DashboardPage"
 import { ProjectsPage } from "./features/projects/ProjectsPage"
 import { ProjectDetailPage } from "./features/projects/ProjectDetailPage"
+import InventoryPage from "./features/inventory/InventoryPage"
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <Route path="/" element={<DashboardPage />} />
         <Route path="/projects" element={<ProjectsPage />} />
         <Route path="/projects/:id" element={<ProjectDetailPage />} />
+        <Route path="/inventory" element={<InventoryPage />} />
 
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>

@@ -198,3 +198,105 @@ export interface ActivityLog {
   createdAt: string
   metadata?: Record<string, any>
 }
+
+// ==========================================
+// INVENTARIO
+// ==========================================
+
+// Categorías de inventario
+export type InventoryCategory = 
+  | 'tools' 
+  | 'equipment' 
+  | 'materials' 
+  | 'supplies' 
+  | 'vehicles' 
+  | 'electronics'
+  | 'furniture'
+  | 'safety'
+  | 'other'
+
+// Estado del item
+export type InventoryStatus = 
+  | 'available'
+  | 'in-use'
+  | 'maintenance'
+  | 'damaged'
+  | 'out-of-stock'
+
+// Tipo de movimiento
+export type MovementType = 
+  | 'entry'        // Entrada
+  | 'exit'         // Salida
+  | 'adjustment'   // Ajuste
+  | 'transfer'     // Transferencia
+  | 'return'       // Devolución
+  | 'loss'         // Pérdida/Baja
+
+// Item de Inventario
+export interface InventoryItem {
+  id: string
+  code: string // Código único del producto
+  name: string
+  description: string
+  category: InventoryCategory
+  status: InventoryStatus
+  
+  // Stock
+  stock: number
+  minStock: number
+  maxStock?: number
+  unit: string // Unidad de medida (pcs, kg, m, etc.)
+  
+  // Ubicación
+  location: string
+  warehouse?: string
+  
+  // Financiero
+  unitPrice: number
+  totalValue: number
+  
+  // Proveedor
+  supplierId?: string
+  supplierName?: string
+  
+  // Metadata
+  lastRestockDate?: string
+  createdAt: string
+  updatedAt: string
+  createdBy: string
+  image?: string
+}
+
+// Formulario de Item
+export interface InventoryFormData {
+  name: string
+  description: string
+  category: InventoryCategory
+  stock: number
+  minStock: number
+  maxStock?: number
+  unit: string
+  location: string
+  warehouse?: string
+  unitPrice: number
+  supplierId?: string
+  image?: string
+}
+
+// Movimiento de Inventario
+export interface InventoryMovement {
+  id: string
+  itemId: string
+  itemName: string
+  itemCode: string
+  type: MovementType
+  quantity: number
+  previousStock: number
+  newStock: number
+  reason: string
+  reference?: string // Número de documento de referencia
+  userId: string
+  userName: string
+  createdAt: string
+  notes?: string
+}
