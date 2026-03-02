@@ -72,12 +72,12 @@ export const ProjectDetailPage = () => {
             </Button>
             <div>
               <div className="flex items-center gap-3 mb-2">
-                <h1 className="text-2xl font-bold text-slate-900">{project.name}</h1>
+                <h1 className="text-lg font-bold text-slate-900">{project.name}</h1>
                 <span className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-medium ${getStatusColor(project.status)}`}>
                   {getStatusLabel(project.status)}
                 </span>
               </div>
-              <p className="text-sm text-slate-600">{project.code} • {project.description}</p>
+              <p className="text-xs text-slate-600">{project.code} • {project.description}</p>
             </div>
           </div>
           <Button className="gap-2">
@@ -91,36 +91,36 @@ export const ProjectDetailPage = () => {
           <div className="bg-white rounded-lg shadow-sm border border-slate-200 p-4">
             <div className="flex items-center gap-2 text-slate-600 mb-1">
               <Activity className="w-4 h-4" />
-              <span className="text-sm">Progreso</span>
+              <span className="text-xs">Progreso</span>
             </div>
-            <p className="text-xl font-bold text-slate-900">{project.progress}%</p>
+            <p className="text-base font-bold text-slate-900">{project.progress}%</p>
           </div>
           <div className="bg-white rounded-lg shadow-sm border border-slate-200 p-4">
             <div className="flex items-center gap-2 text-slate-600 mb-1">
               <DollarSign className="w-4 h-4" />
-              <span className="text-sm">Presupuesto</span>
+              <span className="text-xs">Presupuesto</span>
             </div>
-            <p className="text-xl font-bold text-slate-900">${(project.budget / 1000000).toFixed(1)}M</p>
+            <p className="text-base font-bold text-slate-900">${(project.budget / 1000000).toFixed(1)}M</p>
           </div>
           <div className="bg-white rounded-lg shadow-sm border border-slate-200 p-4">
             <div className="flex items-center gap-2 text-slate-600 mb-1">
               <Calendar className="w-4 h-4" />
-              <span className="text-sm">Fin Planificado</span>
+              <span className="text-xs">Fin Planificado</span>
             </div>
-            <p className="text-base font-bold text-slate-900">
+            <p className="text-sm font-bold text-slate-900">
               {new Date(project.plannedEndDate).toLocaleDateString('es-ES', { month: 'short', year: 'numeric' })}
             </p>
           </div>
           <div className="bg-white rounded-lg shadow-sm border border-slate-200 p-4">
             <div className="flex items-center gap-2 text-slate-600 mb-1">
               <Users className="w-4 h-4" />
-              <span className="text-sm">Gerente</span>
+              <span className="text-xs">Gerente</span>
             </div>
             <div className="flex items-center gap-2">
               <div className="w-6 h-6 rounded-full bg-slate-200 flex items-center justify-center">
                 <span className="text-xs font-medium">{getInitials(project.managerName)}</span>
               </div>
-              <p className="text-sm font-medium text-slate-900">{project.managerName}</p>
+              <p className="text-xs font-medium text-slate-900">{project.managerName}</p>
             </div>
           </div>
         </div>

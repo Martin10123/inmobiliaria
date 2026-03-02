@@ -62,10 +62,10 @@ export const ProjectTimeline = ({ projectId }: ProjectTimelineProps) => {
       {/* Header con Stats */}
       <div className="flex items-center justify-between">
         <div>
-          <h3 className="text-base font-semibold text-slate-900">
+          <h3 className="text-sm font-semibold text-slate-900">
             Timeline del Proyecto
           </h3>
-          <p className="text-sm text-slate-600 mt-1">
+          <p className="text-xs text-slate-600 mt-1">
             {stats.total} fases: {stats.completed} completadas, {stats.inProgress} en progreso, {stats.pending} pendientes
           </p>
         </div>
@@ -145,7 +145,7 @@ export const ProjectTimeline = ({ projectId }: ProjectTimelineProps) => {
                     <div className="flex items-start justify-between mb-3">
                       <div className="flex-1">
                         <div className="flex items-center gap-3 mb-2">
-                          <h5 className="font-semibold text-slate-900">{phase.name}</h5>
+                          <h5 className="text-sm font-semibold text-slate-900">{phase.name}</h5>
                           <span className={`inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-medium ${getPhaseStatusColor(phase.status)}`}>
                             {getStatusIcon(phase.status)}
                             {phase.status === 'completed' ? 'Completada' :
@@ -155,12 +155,12 @@ export const ProjectTimeline = ({ projectId }: ProjectTimelineProps) => {
                           </span>
                         </div>
                         {phase.description && (
-                          <p className="text-sm text-slate-600 mb-3">{phase.description}</p>
+                          <p className="text-xs text-slate-600 mb-3">{phase.description}</p>
                         )}
                       </div>
                       
                       <div className="ml-4 text-right">
-                        <div className="text-lg font-bold text-blue-600 mb-1">{phase.progress}%</div>
+                        <div className="text-sm font-bold text-blue-600 mb-1">{phase.progress}%</div>
                         <div className="w-20 bg-slate-200 rounded-full h-2">
                           <div 
                             className="bg-blue-600 h-2 rounded-full transition-all"
@@ -172,16 +172,16 @@ export const ProjectTimeline = ({ projectId }: ProjectTimelineProps) => {
 
                     <div className="grid grid-cols-3 gap-4 text-sm">
                       <div>
-                        <p className="text-slate-600 mb-1">Inicio</p>
-                        <p className="font-medium text-slate-900">{formatDate(phase.startDate)}</p>
+                        <p className="text-xs text-slate-600 mb-1">Inicio</p>
+                        <p className="text-sm font-medium text-slate-900">{formatDate(phase.startDate)}</p>
                       </div>
                       <div>
-                        <p className="text-slate-600 mb-1">Fin</p>
-                        <p className="font-medium text-slate-900">{formatDate(phase.endDate)}</p>
+                        <p className="text-xs text-slate-600 mb-1">Fin</p>
+                        <p className="text-sm font-medium text-slate-900">{formatDate(phase.endDate)}</p>
                       </div>
                       <div>
-                        <p className="text-slate-600 mb-1">Duración</p>
-                        <p className="font-medium text-slate-900">{duration} días</p>
+                        <p className="text-xs text-slate-600 mb-1">Duración</p>
+                        <p className="text-sm font-medium text-slate-900">{duration} días</p>
                       </div>
                     </div>
 

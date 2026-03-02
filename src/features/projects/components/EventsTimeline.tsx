@@ -33,7 +33,7 @@ export const EventsTimeline = ({ projectId }: EventsTimelineProps) => {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <h3 className="text-base font-semibold text-slate-900">
+        <h3 className="text-sm font-semibold text-slate-900">
           Línea de Tiempo del Proyecto ({projectEvents.length} eventos)
         </h3>
       </div>
@@ -41,7 +41,7 @@ export const EventsTimeline = ({ projectId }: EventsTimelineProps) => {
       {projectEvents.length === 0 ? (
         <div className="text-center py-12 bg-slate-50 rounded-lg">
           <Activity className="w-12 h-12 text-slate-400 mx-auto mb-3" />
-          <p className="text-slate-600">No hay eventos registrados</p>
+          <p className="text-sm text-slate-600">No hay eventos registrados</p>
         </div>
       ) : (
         <div className="relative">

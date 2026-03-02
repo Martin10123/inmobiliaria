@@ -34,10 +34,10 @@ export const TeamSection = ({ projectId }: TeamSectionProps) => {
       {/* Header con Stats */}
       <div className="flex items-center justify-between">
         <div>
-          <h3 className="text-base font-semibold text-slate-900">
+          <h3 className="text-sm font-semibold text-slate-900">
             Equipo del Proyecto ({teamMembers.length} miembros)
           </h3>
-          <p className="text-sm text-slate-600 mt-1">
+          <p className="text-xs text-slate-600 mt-1">
             Total de horas trabajadas: {totalHours}h
           </p>
         </div>
@@ -74,7 +74,7 @@ export const TeamSection = ({ projectId }: TeamSectionProps) => {
                       
                       {/* Info */}
                       <div className="flex-1 min-w-0">
-                        <h5 className="font-semibold text-slate-900 mb-1">
+                        <h5 className="text-sm font-semibold text-slate-900 mb-1">
                           {member.name}
                         </h5>
                         <span className={`inline-block px-2 py-0.5 rounded-full text-xs font-medium border ${roleColors[member.role as keyof typeof roleColors] || 'bg-slate-100 text-slate-700'}`}>
@@ -86,7 +86,7 @@ export const TeamSection = ({ projectId }: TeamSectionProps) => {
                     {/* Contact Info */}
                     <div className="mt-4 space-y-2">
                       {member.email && (
-                        <div className="flex items-center gap-2 text-sm text-slate-600">
+                        <div className="flex items-center gap-2 text-xs text-slate-600">
                           <Mail className="w-4 h-4 flex-shrink-0" />
                           <a 
                             href={`mailto:${member.email}`}
@@ -97,7 +97,7 @@ export const TeamSection = ({ projectId }: TeamSectionProps) => {
                         </div>
                       )}
                       {member.phone && (
-                        <div className="flex items-center gap-2 text-sm text-slate-600">
+                        <div className="flex items-center gap-2 text-xs text-slate-600">
                           <Phone className="w-4 h-4 flex-shrink-0" />
                           <a 
                             href={`tel:${member.phone}`}
@@ -113,12 +113,12 @@ export const TeamSection = ({ projectId }: TeamSectionProps) => {
                     <div className="mt-4 pt-4 border-t border-slate-100">
                       <div className="grid grid-cols-2 gap-4 text-center">
                         <div>
-                          <p className="text-sm text-slate-600">Horas</p>
-                          <p className="text-base font-bold text-slate-900">{member.hoursWorked}h</p>
+                          <p className="text-xs text-slate-600">Horas</p>
+                          <p className="text-sm font-bold text-slate-900">{member.hoursWorked}h</p>
                         </div>
                         <div>
-                          <p className="text-sm text-slate-600">Proyectos</p>
-                          <p className="text-base font-bold text-blue-600">{member.projects.length}</p>
+                          <p className="text-xs text-slate-600">Proyectos</p>
+                          <p className="text-sm font-bold text-blue-600">{member.projects.length}</p>
                         </div>
                       </div>
                     </div>

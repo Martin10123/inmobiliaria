@@ -38,10 +38,10 @@ export const DocumentsList = ({ projectId }: DocumentsListProps) => {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h3 className="text-base font-semibold text-slate-900">
+          <h3 className="text-sm font-semibold text-slate-900">
             Documentos del Proyecto ({projectDocuments.length})
           </h3>
-          <p className="text-sm text-slate-600 mt-1">
+          <p className="text-xs text-slate-600 mt-1">
             Total: {formatBytes(projectDocuments.reduce((sum, doc) => sum + doc.size, 0))}
           </p>
         </div>
@@ -54,7 +54,7 @@ export const DocumentsList = ({ projectId }: DocumentsListProps) => {
       {projectDocuments.length === 0 ? (
         <div className="text-center py-12 bg-slate-50 rounded-lg">
           <FileText className="w-12 h-12 text-slate-400 mx-auto mb-3" />
-          <p className="text-slate-600">No hay documentos cargados</p>
+          <p className="text-sm text-slate-600">No hay documentos en este proyecto</p>
         </div>
       ) : (
         <div className="space-y-6">

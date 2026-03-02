@@ -52,8 +52,8 @@ export const ProjectTable = ({ projects, onEdit }: ProjectTableProps) => {
     return (
       <div className="bg-white rounded-lg shadow-sm border border-slate-200 p-12 text-center">
         <AlertCircle className="w-12 h-12 text-slate-400 mx-auto mb-3" />
-        <p className="text-slate-600 font-medium">No se encontraron proyectos</p>
-        <p className="text-slate-500 text-sm">Intenta ajustar los filtros de búsqueda</p>
+        <p className="text-sm text-slate-600 font-medium">No se encontraron proyectos</p>
+        <p className="text-xs text-slate-500">Intenta ajustar los filtros de búsqueda</p>
       </div>
     )
   }
@@ -102,12 +102,12 @@ export const ProjectTable = ({ projects, onEdit }: ProjectTableProps) => {
               >
                 <td className="px-6 py-4">
                   <div>
-                    <p className="font-medium text-slate-900">{project.name}</p>
-                    <p className="text-sm text-slate-500">{project.code}</p>
+                    <p className="text-sm font-medium text-slate-900">{project.name}</p>
+                    <p className="text-xs text-slate-500">{project.code}</p>
                   </div>
                 </td>
                 <td className="px-6 py-4">
-                  <span className="text-sm text-slate-700">{getTypeLabel(project.type)}</span>
+                  <span className="text-xs text-slate-700">{getTypeLabel(project.type)}</span>
                 </td>
                 <td className="px-6 py-4">
                   <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium ${getStatusColor(project.status)}`}>
@@ -123,11 +123,11 @@ export const ProjectTable = ({ projects, onEdit }: ProjectTableProps) => {
                         style={{ width: `${project.progress}%` }}
                       />
                     </div>
-                    <span className="text-sm text-slate-700 font-medium">{project.progress}%</span>
+                    <span className="text-xs text-slate-700 font-medium">{project.progress}%</span>
                   </div>
                 </td>
                 <td className="px-6 py-4">
-                  <span className={`text-sm font-medium ${getPriorityColor(project.priority)}`}>
+                  <span className={`text-xs font-medium ${getPriorityColor(project.priority)}`}>
                     {getPriorityLabel(project.priority)}
                   </span>
                 </td>
@@ -138,12 +138,12 @@ export const ProjectTable = ({ projects, onEdit }: ProjectTableProps) => {
                         {getInitials(project.managerName)}
                       </span>
                     </div>
-                    <span className="text-sm text-slate-700">{project.managerName}</span>
+                    <span className="text-xs text-slate-700">{project.managerName}</span>
                   </div>
                 </td>
                 <td className="px-6 py-4">
                   <div>
-                    <p className="text-sm font-medium text-slate-900">
+                    <p className="text-xs font-medium text-slate-900">
                       ${project.budget.toLocaleString()}
                     </p>
                     <p className="text-xs text-slate-500">
@@ -152,7 +152,7 @@ export const ProjectTable = ({ projects, onEdit }: ProjectTableProps) => {
                   </div>
                 </td>
                 <td className="px-6 py-4">
-                  <div className="flex items-center gap-1.5 text-sm text-slate-600">
+                  <div className="flex items-center gap-1.5 text-xs text-slate-600">
                     <Calendar className="w-4 h-4" />
                     <span>{new Date(project.plannedEndDate).toLocaleDateString('es-ES')}</span>
                   </div>
