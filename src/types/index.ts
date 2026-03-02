@@ -521,3 +521,103 @@ export interface CustomerFormData {
   creditLimit: number
   tags: string[]
 }
+
+// ========================================
+// SOLICITUDES Y APROBACIONES
+// ========================================
+
+export type RequestType = 
+  | 'material_requirement'
+  | 'equipment_requirement'
+  | 'loan'
+  | 'maintenance'
+
+export type RequestStatus = 
+  | 'draft'
+  | 'pending'
+  | 'in_review'
+  | 'approved'
+  | 'rejected'
+  | 'cancelled'
+  | 'executed'
+
+export type ApprovalStatus = 'pending' | 'approved' | 'rejected'
+
+export interface RequestItem {
+  id: string
+  name: string
+  description: string
+  quantity: number
+  unit: string
+  estimatedCost?: number
+}
+
+export interface ApprovalLevel {
+  level: number
+  approverRole: string
+  approverName: string
+  approverId: string
+  status: ApprovalStatus
+  approvalDate?: string
+  comments?: string
+  responseTime?: number // horas
+}
+
+export interface Request {
+  id: string
+  code: string
+  type: RequestType
+  title: string
+  description: string
+  priority: Priority
+  status: RequestStatus
+  
+  // Solicitante
+  requestedBy: User
+  requestedDate: string
+  
+  // Relaciones
+  projectId?: string
+  projectName?: string
+  
+  // Items solicitados
+  items: RequestItem[]
+  
+  // Financiero
+  estimatedAmount: number
+  
+  // Fechas
+  requiredDate?: string
+  approvalDeadline?: string
+  
+  // Flujo de aprobación
+  approvalFlow: ApprovalLevel[]
+  currentApprovalLevel: number
+  
+  // Documentos
+  attachments?: string[]
+  
+  // Historial
+  history: {
+    date: string
+    user: string
+    action: string
+    previousStatus?: RequestStatus
+    newStatus: RequestStatus
+    comments?: string
+  }[]
+  
+  // Metadata
+  createdAt: string
+  updatedAt: string
+}
+
+export interface RequestFormData {
+  type: RequestType
+  title: string
+  description: string
+  priority: Priority
+  projectId?: string
+  items: RequestItem[]
+  requiredDate?: string
+}
