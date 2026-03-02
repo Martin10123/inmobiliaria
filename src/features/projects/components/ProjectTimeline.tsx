@@ -62,7 +62,7 @@ export const ProjectTimeline = ({ projectId }: ProjectTimelineProps) => {
       {/* Header con Stats */}
       <div className="flex items-center justify-between">
         <div>
-          <h3 className="text-lg font-semibold text-slate-900">
+          <h3 className="text-base font-semibold text-slate-900">
             Timeline del Proyecto
           </h3>
           <p className="text-sm text-slate-600 mt-1">
@@ -160,7 +160,7 @@ export const ProjectTimeline = ({ projectId }: ProjectTimelineProps) => {
                       </div>
                       
                       <div className="ml-4 text-right">
-                        <div className="text-2xl font-bold text-blue-600 mb-1">{phase.progress}%</div>
+                        <div className="text-lg font-bold text-blue-600 mb-1">{phase.progress}%</div>
                         <div className="w-20 bg-slate-200 rounded-full h-2">
                           <div 
                             className="bg-blue-600 h-2 rounded-full transition-all"

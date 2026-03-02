@@ -48,7 +48,7 @@ export const ProjectOverview = ({ project }: ProjectOverviewProps) => {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {/* Detalles Generales */}
         <div className="space-y-4">
-          <h3 className="text-lg font-semibold text-slate-900">Detalles Generales</h3>
+          <h3 className="text-base font-semibold text-slate-900">Detalles Generales</h3>
           
           <div className="space-y-3">
             <div>
@@ -82,7 +82,7 @@ export const ProjectOverview = ({ project }: ProjectOverviewProps) => {
 
         {/* Fechas */}
         <div className="space-y-4">
-          <h3 className="text-lg font-semibold text-slate-900 flex items-center gap-2">
+          <h3 className="text-base font-semibold text-slate-900 flex items-center gap-2">
             <Calendar className="w-5 h-5" />
             Cronología
           </h3>
@@ -124,7 +124,7 @@ export const ProjectOverview = ({ project }: ProjectOverviewProps) => {
 
       {/* Información Financiera */}
       <div className="space-y-4">
-        <h3 className="text-lg font-semibold text-slate-900 flex items-center gap-2">
+        <h3 className="text-base font-semibold text-slate-900 flex items-center gap-2">
           <DollarSign className="w-5 h-5" />
           Información Financiera
         </h3>
@@ -132,12 +132,12 @@ export const ProjectOverview = ({ project }: ProjectOverviewProps) => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div>
             <label className="text-sm text-slate-600">Presupuesto Total</label>
-            <p className="text-2xl font-bold text-slate-900">${project.budget.toLocaleString()}</p>
+            <p className="text-xl font-bold text-slate-900">${project.budget.toLocaleString()}</p>
           </div>
           
           <div>
             <label className="text-sm text-slate-600">Costo Actual</label>
-            <p className={`text-2xl font-bold ${overBudget ? 'text-red-600' : 'text-slate-900'}`}>
+            <p className={`text-xl font-bold ${overBudget ? 'text-red-600' : 'text-slate-900'}`}>
               ${project.currentCost.toLocaleString()}
             </p>
             <div className="mt-2 bg-slate-200 rounded-full h-2">
@@ -151,7 +151,7 @@ export const ProjectOverview = ({ project }: ProjectOverviewProps) => {
           
           <div>
             <label className="text-sm text-slate-600">Ingresos Proyectados</label>
-            <p className="text-2xl font-bold text-green-600">${project.projectedRevenue.toLocaleString()}</p>
+            <p className="text-xl font-bold text-green-600">${project.projectedRevenue.toLocaleString()}</p>
             <p className="text-sm text-slate-600 mt-1">
               Rentabilidad: {Math.round(((project.projectedRevenue - project.budget) / project.budget) * 100)}%
             </p>
@@ -162,7 +162,7 @@ export const ProjectOverview = ({ project }: ProjectOverviewProps) => {
       {/* Clientes y Contratos */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
-          <h3 className="text-lg font-semibold text-slate-900 flex items-center gap-2 mb-3">
+          <h3 className="text-base font-semibold text-slate-900 flex items-center gap-2 mb-3">
             <Users className="w-5 h-5" />
             Clientes Asociados
           </h3>
@@ -174,7 +174,7 @@ export const ProjectOverview = ({ project }: ProjectOverviewProps) => {
         </div>
         
         <div>
-          <h3 className="text-lg font-semibold text-slate-900 flex items-center gap-2 mb-3">
+          <h3 className="text-base font-semibold text-slate-900 flex items-center gap-2 mb-3">
             <FileText className="w-5 h-5" />
             Contratos Ligados
           </h3>
@@ -188,7 +188,7 @@ export const ProjectOverview = ({ project }: ProjectOverviewProps) => {
 
       {/* Progreso General */}
       <div className="space-y-4">
-        <h3 className="text-lg font-semibold text-slate-900 flex items-center gap-2">
+        <h3 className="text-base font-semibold text-slate-900 flex items-center gap-2">
           <TrendingUp className="w-5 h-5" />
           Progreso General
         </h3>
@@ -196,7 +196,7 @@ export const ProjectOverview = ({ project }: ProjectOverviewProps) => {
         <div className="bg-gradient-to-r from-blue-50 to-cyan-50 rounded-lg p-6">
           <div className="flex justify-between items-center mb-2">
             <span className="text-sm font-medium text-slate-700">Avance del Proyecto</span>
-            <span className="text-2xl font-bold text-blue-600">{project.progress}%</span>
+            <span className="text-xl font-bold text-blue-600">{project.progress}%</span>
           </div>
           <div className="bg-white rounded-full h-4 overflow-hidden">
             <div 

@@ -49,19 +49,19 @@ export const TaskList = ({ projectId }: TaskListProps) => {
       <div className="flex items-center justify-between">
         <div className="grid grid-cols-4 gap-4">
           <div className="text-center">
-            <p className="text-2xl font-bold text-slate-900">{stats.total}</p>
+            <p className="text-lg font-bold text-slate-900">{stats.total}</p>
             <p className="text-sm text-slate-600">Total</p>
           </div>
           <div className="text-center">
-            <p className="text-2xl font-bold text-slate-600">{stats.pending}</p>
+            <p className="text-lg font-bold text-slate-600">{stats.pending}</p>
             <p className="text-sm text-slate-600">Pendientes</p>
           </div>
           <div className="text-center">
-            <p className="text-2xl font-bold text-blue-600">{stats.inProgress}</p>
+            <p className="text-lg font-bold text-blue-600">{stats.inProgress}</p>
             <p className="text-sm text-slate-600">En Progreso</p>
           </div>
           <div className="text-center">
-            <p className="text-2xl font-bold text-green-600">{stats.completed}</p>
+            <p className="text-lg font-bold text-green-600">{stats.completed}</p>
             <p className="text-sm text-slate-600">Completadas</p>
           </div>
         </div>
@@ -163,7 +163,7 @@ export const TaskList = ({ projectId }: TaskListProps) => {
                   </div>
                   
                   <div className="ml-4 text-right">
-                    <div className="text-2xl font-bold text-blue-600 mb-1">{task.progress}%</div>
+                    <div className="text-lg font-bold text-blue-600 mb-1">{task.progress}%</div>
                     <div className="w-20 bg-slate-200 rounded-full h-2">
                       <div 
                         className="bg-blue-600 h-2 rounded-full transition-all"

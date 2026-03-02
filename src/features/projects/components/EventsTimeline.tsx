@@ -33,7 +33,7 @@ export const EventsTimeline = ({ projectId }: EventsTimelineProps) => {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <h3 className="text-lg font-semibold text-slate-900">
+        <h3 className="text-base font-semibold text-slate-900">
           Línea de Tiempo del Proyecto ({projectEvents.length} eventos)
         </h3>
       </div>

@@ -66,16 +66,242 @@ ERP API / Notificaciones
 
 ## 1️⃣ Gestión de Proyectos
 
-- Crear tareas
-- Asignar responsables
-- Estados (Pendiente, En progreso, Finalizada)
-- Fechas límite
-- Seguimiento de carga laboral
+### 📋 Características Principales
 
-Eventos emitidos:
+#### Vista General de Proyectos
+- Lista completa de proyectos con filtros avanzados
+- Búsqueda por nombre o código de proyecto
+- Filtrado por estado (Planificación, En Progreso, Pausado, Completado, Cancelado)
+- Filtrado por tipo (Residencial, Comercial, Industrial, Infraestructura, Remodelación)
+- Filtrado por prioridad (Baja, Media, Alta, Crítica)
+- Estadísticas en tiempo real (Total, En Progreso, En Planificación, Completados)
+- Tabla interactiva con información de progreso y presupuesto
+
+#### Detalle de Proyecto
+Cada proyecto cuenta con un panel completo dividido en 6 pestañas:
+
+**1. Información General (Overview)**
+- Detalles del proyecto (tipo, prioridad, código, descripción)
+- Cronograma completo (fechas planificadas vs reales)
+- Información financiera (presupuesto, costo actual, ingresos proyectados, rentabilidad)
+- Ubicación del proyecto (dirección, ciudad)
+- Alertas automáticas (presupuesto excedido, proyecto atrasado)
+- Indicador de progreso visual con porcentaje
+- KPIs principales (días restantes, porcentaje de presupuesto usado)
+
+**2. Tareas del Proyecto**
+- Lista completa de tareas del proyecto
+- Filtros por estado (Pendientes, En Progreso, Completadas)
+- Estadísticas de tareas (total, pendientes, completadas)
+- Información por tarea:
+  - Nombre, descripción y estado
+  - Prioridad visual con colores
+  - Responsable asignado con avatar
+  - Fecha de vencimiento con alertas de retraso
+  - Horas estimadas vs horas reales
+  - Barra de progreso porcentual
+  - Sistema de dependencias entre tareas
+- Botón para crear nuevas tareas
+- Indicadores de tareas vencidas
+
+**3. Eventos del Proyecto (Timeline)**
+- Registro cronológico de todos los eventos
+- Tipos de eventos:
+  - PROJECT_CREATED (Creación del proyecto)
+  - STATUS_CHANGED (Cambios de estado)
+  - TASK_COMPLETED (Tareas completadas)
+  - DOCUMENT_UPLOADED (Documentos subidos)
+  - TEAM_MEMBER_ADDED (Miembros agregados)
+  - BUDGET_UPDATED (Actualizaciones presupuestarias)
+  - MILESTONE_REACHED (Hitos alcanzados)
+  - PHASE_COMPLETED (Fases completadas)
+  - CONTRACT_SIGNED (Contratos firmados)
+  - CLIENT_MEETING (Reuniones con clientes)
+  - PAYMENT_RECEIVED (Pagos recibidos)
+- Metadata contextual para cada evento
+- Íconos distintivos según tipo de evento
+- Formato de fecha y hora
+- Usuario que generó el evento
+
+**4. Documentos del Proyecto**
+- Biblioteca de documentos organizada
+- Tipos de documentos:
+  - Contratos
+  - Planos
+  - Permisos
+  - Facturas
+  - Reportes
+  - Imágenes
+  - Otros
+- Información por documento:
+  - Nombre y tipo
+  - Tamaño del archivo (KB, MB)
+  - Fecha de carga
+  - Usuario que subió el archivo
+  - Número de versión
+- Estadísticas de documentos por tipo
+- Botón para subir nuevos documentos
+- Acciones: Ver, Descargar, Eliminar
+
+**5. Equipo del Proyecto**
+- Lista completa del equipo con avatar circular
+- Roles del equipo:
+  - Project Manager (Gerente de Proyecto)
+  - Architect (Arquitecto)
+  - Engineer (Ingeniero)
+  - Contractor (Contratista)
+  - Supervisor (Supervisor)
+  - Designer (Diseñador)
+  - Accountant (Contador)
+  - Legal (Legal)
+  - Other (Otro)
+- Información por miembro:
+  - Nombre completo con iniciales en avatar
+  - Rol con etiquetas de color
+  - Email y teléfono de contacto
+  - Horas asignadas al proyecto
+  - Número de tareas asignadas
+- Estadísticas del equipo (total de miembros por rol)
+- Botón para agregar nuevos miembros
+
+**6. Timeline del Proyecto (Gantt)**
+- Visualización cronológica de fases del proyecto
+- Información por fase:
+  - Nombre de la fase
+  - Fechas de inicio y fin
+  - Duración en días
+  - Porcentaje de progreso
+  - Estado (Completada, En Progreso, Pendiente, Retrasada)
+- Barra de progreso visual para cada fase
+- Indicadores de estado con colores
+- Vista general del cronograma del proyecto
+- Identificación de fases críticas o retrasadas
+
+### 🎯 Datos Gestionados
+
+**Proyecto Principal:**
+- Información básica (nombre, código, descripción)
+- Estado del proyecto (5 estados posibles)
+- Tipo de proyecto (5 categorías)
+- Prioridad (4 niveles)
+- Cliente asociado (ID + nombre)
+- Gerente de proyecto (ID + nombre)
+- Fechas (planificadas y reales de inicio/fin)
+- Presupuesto y costos actuales
+- Ingresos proyectados
+- Porcentaje de progreso general
+- Ubicación (dirección, ciudad)
+
+**Tareas:**
+- Título, descripción y estado
+- Prioridad y asignación
+- Fechas de inicio, vencimiento y completación
+- Horas estimadas vs reales
+- Porcentaje de progreso
+- Sistema de dependencias
+- Vinculación al proyecto
+
+**Eventos:**
+- Tipo de evento (11 tipos)
+- Fecha y hora del evento
+- Usuario que lo generó
+- Metadata contextual (JSON)
+- Vinculación al proyecto
+
+**Documentos:**
+- Nombre y tipo
+- Ruta del archivo
+- Tamaño en bytes
+- Número de versión
+- Fecha de carga y usuario
+- Vinculación al proyecto
+
+**Equipo:**
+- Información de contacto completa
+- Rol en el proyecto
+- Horas asignadas
+- Vinculación al proyecto
+
+**Fases:**
+- Nombre y descripción
+- Fechas de inicio y fin
+- Estado y progreso
+- Vinculación al proyecto
+
+### 🔔 Eventos Emitidos
+
+Por el Motor de Eventos del Sistema:
+
+**Eventos de Proyecto:**
+- Proyecto creado
+- Estado del proyecto cambiado
+- Presupuesto actualizado
+- Proyecto completado
+- Proyecto pausado/cancelado
+
+**Eventos de Tareas:**
 - Nueva tarea creada
+- Tarea completada
 - Tarea vencida
 - Tarea sin iniciar después de 24h
+- Cambio de prioridad de tarea
+
+**Eventos de Documentos:**
+- Documento subido
+- Nueva versión de documento
+- Documento eliminado
+
+**Eventos de Equipo:**
+- Miembro agregado al equipo
+- Miembro removido del equipo
+- Cambio de rol
+
+**Eventos de Hitos:**
+- Hito alcanzado
+- Fase completada
+- Contrato firmado
+- Pago recibido
+
+**Eventos de Clientes:**
+- Reunión con cliente programada
+- Reunión con cliente realizada
+- Aprobación de cliente recibida
+
+### 🏗 Arquitectura del Módulo
+
+```
+src/features/projects/
+├── ProjectsPage.tsx (Vista principal con lista)
+├── ProjectDetailPage.tsx (Vista de detalle con pestañas)
+├── components/
+│   ├── ProjectStats.tsx (Estadísticas)
+│   ├── ProjectFilters.tsx (Búsqueda y filtros)
+│   ├── ProjectTable.tsx (Tabla de proyectos)
+│   ├── ProjectFormModal.tsx (Formulario crear/editar)
+│   ├── ProjectOverview.tsx (Pestaña: Info general)
+│   ├── TaskList.tsx (Pestaña: Tareas)
+│   ├── EventsTimeline.tsx (Pestaña: Eventos)
+│   ├── DocumentsList.tsx (Pestaña: Documentos)
+│   ├── TeamSection.tsx (Pestaña: Equipo)
+│   └── ProjectTimeline.tsx (Pestaña: Timeline/Gantt)
+├── data/
+│   ├── mockProjects.ts (4 proyectos de ejemplo)
+│   ├── mockTasks.ts (10 tareas de ejemplo)
+│   ├── mockEvents.ts (14 eventos de ejemplo)
+│   └── mockData.ts (Documentos, equipo, fases)
+└── utils/
+    └── projectHelpers.ts (20+ funciones auxiliares)
+```
+
+### ✅ Buenas Prácticas Implementadas
+
+1. **Componentización:** Componentes pequeños (< 100 líneas)
+2. **Separación de responsabilidades:** Datos, lógica y presentación separados
+3. **TypeScript:** 100% tipado, sin uso de 'any'
+4. **Reutilización:** Helpers compartidos para formateo y etiquetado
+5. **Responsive:** Diseño adaptable a diferentes pantallas
+6. **Accesibilidad:** Etiquetas semánticas y navegación por teclado
+7. **Performance:** Renderizado condicional y filtrado eficiente
 
 ---
 

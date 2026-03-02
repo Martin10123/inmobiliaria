@@ -34,7 +34,7 @@ export const TeamSection = ({ projectId }: TeamSectionProps) => {
       {/* Header con Stats */}
       <div className="flex items-center justify-between">
         <div>
-          <h3 className="text-lg font-semibold text-slate-900">
+          <h3 className="text-base font-semibold text-slate-900">
             Equipo del Proyecto ({teamMembers.length} miembros)
           </h3>
           <p className="text-sm text-slate-600 mt-1">
@@ -68,7 +68,7 @@ export const TeamSection = ({ projectId }: TeamSectionProps) => {
                   >
                     <div className="flex items-start gap-3">
                       {/* Avatar */}
-                      <div className="w-14 h-14 rounded-full bg-gradient-to-br from-blue-500 to-cyan-600 flex items-center justify-center text-white font-bold text-lg flex-shrink-0">
+                      <div className="w-14 h-14 rounded-full bg-gradient-to-br from-blue-500 to-cyan-600 flex items-center justify-center text-white font-bold text-base flex-shrink-0">
                         {getInitials(member.name)}
                       </div>
                       
@@ -114,11 +114,11 @@ export const TeamSection = ({ projectId }: TeamSectionProps) => {
                       <div className="grid grid-cols-2 gap-4 text-center">
                         <div>
                           <p className="text-sm text-slate-600">Horas</p>
-                          <p className="text-lg font-bold text-slate-900">{member.hoursWorked}h</p>
+                          <p className="text-base font-bold text-slate-900">{member.hoursWorked}h</p>
                         </div>
                         <div>
                           <p className="text-sm text-slate-600">Proyectos</p>
-                          <p className="text-lg font-bold text-blue-600">{member.projects.length}</p>
+                          <p className="text-base font-bold text-blue-600">{member.projects.length}</p>
                         </div>
                       </div>
                     </div>

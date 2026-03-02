@@ -54,8 +54,8 @@ export const ProjectsPage = () => {
         {/* Header */}
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-3xl font-bold text-slate-900">Proyectos</h1>
-            <p className="text-slate-600 mt-1">Gestiona todos los proyectos de la empresa</p>
+            <h1 className="text-2xl font-bold text-slate-900">Proyectos</h1>
+            <p className="text-sm text-slate-600 mt-1">Gestiona todos los proyectos de la empresa</p>
           </div>
           <Button onClick={handleCreateProject} className="gap-2">
             <Plus className="w-4 h-4" />

@@ -72,12 +72,12 @@ export const ProjectDetailPage = () => {
             </Button>
             <div>
               <div className="flex items-center gap-3 mb-2">
-                <h1 className="text-3xl font-bold text-slate-900">{project.name}</h1>
+                <h1 className="text-2xl font-bold text-slate-900">{project.name}</h1>
                 <span className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-medium ${getStatusColor(project.status)}`}>
                   {getStatusLabel(project.status)}
                 </span>
               </div>
-              <p className="text-slate-600">{project.code} • {project.description}</p>
+              <p className="text-sm text-slate-600">{project.code} • {project.description}</p>
             </div>
           </div>
           <Button className="gap-2">
@@ -93,21 +93,21 @@ export const ProjectDetailPage = () => {
               <Activity className="w-4 h-4" />
               <span className="text-sm">Progreso</span>
             </div>
-            <p className="text-2xl font-bold text-slate-900">{project.progress}%</p>
+            <p className="text-xl font-bold text-slate-900">{project.progress}%</p>
           </div>
           <div className="bg-white rounded-lg shadow-sm border border-slate-200 p-4">
             <div className="flex items-center gap-2 text-slate-600 mb-1">
               <DollarSign className="w-4 h-4" />
               <span className="text-sm">Presupuesto</span>
             </div>
-            <p className="text-2xl font-bold text-slate-900">${(project.budget / 1000000).toFixed(1)}M</p>
+            <p className="text-xl font-bold text-slate-900">${(project.budget / 1000000).toFixed(1)}M</p>
           </div>
           <div className="bg-white rounded-lg shadow-sm border border-slate-200 p-4">
             <div className="flex items-center gap-2 text-slate-600 mb-1">
               <Calendar className="w-4 h-4" />
               <span className="text-sm">Fin Planificado</span>
             </div>
-            <p className="text-lg font-bold text-slate-900">
+            <p className="text-base font-bold text-slate-900">
               {new Date(project.plannedEndDate).toLocaleDateString('es-ES', { month: 'short', year: 'numeric' })}
             </p>
           </div>
