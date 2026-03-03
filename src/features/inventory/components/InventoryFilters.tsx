@@ -1,4 +1,5 @@
 import { Search } from 'lucide-react'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import type { InventoryCategory, InventoryStatus } from '../../../types'
 import { getCategoryLabel, getStatusLabel } from '../utils/inventoryHelpers'
 
@@ -58,34 +59,42 @@ export default function InventoryFilters({
 
         {/* Filtro por Categoría */}
         <div>
-          <select
+          <Select
             value={selectedCategory}
-            onChange={(e) => onCategoryChange(e.target.value as InventoryCategory | 'all')}
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            onValueChange={(value) => onCategoryChange(value as InventoryCategory | 'all')}
           >
-            <option value="all">Todas las Categorías</option>
-            {categories.slice(1).map((category) => (
-              <option key={category} value={category}>
-                {getCategoryLabel(category as InventoryCategory)}
-              </option>
-            ))}
-          </select>
+            <SelectTrigger>
+              <SelectValue placeholder="Todas las Categorías" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">Todas las Categorías</SelectItem>
+              {categories.slice(1).map((category) => (
+                <SelectItem key={category} value={category}>
+                  {getCategoryLabel(category as InventoryCategory)}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
         </div>
 
         {/* Filtro por Estado */}
         <div>
-          <select
+          <Select
             value={selectedStatus}
-            onChange={(e) => onStatusChange(e.target.value as InventoryStatus | 'all')}
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            onValueChange={(value) => onStatusChange(value as InventoryStatus | 'all')}
           >
-            <option value="all">Todos los Estados</option>
-            {statuses.slice(1).map((status) => (
-              <option key={status} value={status}>
-                {getStatusLabel(status as InventoryStatus)}
-              </option>
-            ))}
-          </select>
+            <SelectTrigger>
+              <SelectValue placeholder="Todos los Estados" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">Todos los Estados</SelectItem>
+              {statuses.slice(1).map((status) => (
+                <SelectItem key={status} value={status}>
+                  {getStatusLabel(status as InventoryStatus)}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
         </div>
       </div>
     </div>

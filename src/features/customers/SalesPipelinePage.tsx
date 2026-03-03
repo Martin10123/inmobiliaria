@@ -99,33 +99,35 @@ export const SalesPipelinePage = () => {
 
             <div className="flex items-center gap-2">
               <label className="text-sm text-slate-600">Ejecutivo:</label>
-              <select
-                value={filterAssignedTo}
-                onChange={e => setFilterAssignedTo(e.target.value)}
-                className="px-3 py-1.5 text-sm border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-              >
-                <option value="all">Todos</option>
-                {uniqueExecutives.map(exec => (
-                  <option key={exec.id} value={exec.id}>
-                    {exec.name}
-                  </option>
-                ))}
-              </select>
+              <Select value={filterAssignedTo} onValueChange={(value) => setFilterAssignedTo(value)}>
+                <SelectTrigger className="w-40">
+                  <SelectValue placeholder="Todos" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">Todos</SelectItem>
+                  {uniqueExecutives.map(exec => (
+                    <SelectItem key={exec.id} value={exec.id}>
+                      {exec.name}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             </div>
 
             <div className="flex items-center gap-2">
               <label className="text-sm text-slate-600">Valor mínimo:</label>
-              <select
-                value={filterMinValue}
-                onChange={e => setFilterMinValue(Number(e.target.value))}
-                className="px-3 py-1.5 text-sm border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-              >
-                <option value={0}>Todos</option>
-                <option value={50000000}>$50M+</option>
-                <option value={100000000}>$100M+</option>
-                <option value={200000000}>$200M+</option>
-                <option value={500000000}>$500M+</option>
-              </select>
+              <Select value={filterMinValue.toString()} onValueChange={(value) => setFilterMinValue(Number(value))}>
+                <SelectTrigger className="w-32">
+                  <SelectValue placeholder="Todos" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="0">Todos</SelectItem>
+                  <SelectItem value="50000000">$50M+</SelectItem>
+                  <SelectItem value="100000000">$100M+</SelectItem>
+                  <SelectItem value="200000000">$200M+</SelectItem>
+                  <SelectItem value="500000000">$500M+</SelectItem>
+                </SelectContent>
+              </Select>
             </div>
 
             {(filterAssignedTo !== 'all' || filterMinValue > 0) && (

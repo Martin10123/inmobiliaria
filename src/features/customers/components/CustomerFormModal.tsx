@@ -2,6 +2,7 @@ import { Modal } from '@/components/ui/modal'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import type { Customer } from '@/types'
 
 interface CustomerFormModalProps {
@@ -12,7 +13,6 @@ interface CustomerFormModalProps {
 
 export const CustomerFormModal = ({ isOpen, onClose, customer }: CustomerFormModalProps) => {
   const isEdit = !!customer
-  const selectClass = "h-11 w-full rounded-lg border-2 border-slate-200 bg-white px-4 py-2 text-sm text-slate-900 transition-all focus:border-cyan-500 focus:outline-none focus:ring-2 focus:ring-cyan-500/20"
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
@@ -40,24 +40,34 @@ export const CustomerFormModal = ({ isOpen, onClose, customer }: CustomerFormMod
           {/* Tipo */}
           <div>
             <Label htmlFor="type">Tipo de Cliente</Label>
-            <select id="type" defaultValue={customer?.type || 'individual'} required className={selectClass}>
-              <option value="individual">Persona Natural</option>
-              <option value="small-business">Pequeña Empresa</option>
-              <option value="corporate">Corporativo</option>
-              <option value="government">Gobierno</option>
-            </select>
+            <Select defaultValue={customer?.type || 'individual'}>
+              <SelectTrigger>
+                <SelectValue placeholder="Selecciona tipo" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="individual">Persona Natural</SelectItem>
+                <SelectItem value="small-business">Pequeña Empresa</SelectItem>
+                <SelectItem value="corporate">Corporativo</SelectItem>
+                <SelectItem value="government">Gobierno</SelectItem>
+              </SelectContent>
+            </Select>
           </div>
 
           {/* Nivel */}
           <div>
             <Label htmlFor="level">Nivel</Label>
-            <select id="level" defaultValue={customer?.level || 'bronze'} required className={selectClass}>
-              <option value="bronze">Bronce</option>
-              <option value="silver">Plata</option>
-              <option value="gold">Oro</option>
-              <option value="platinum">Platino</option>
-              <option value="vip">VIP</option>
-            </select>
+            <Select defaultValue={customer?.level || 'bronze'}>
+              <SelectTrigger>
+                <SelectValue placeholder="Selecciona nivel" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="bronze">Bronce</SelectItem>
+                <SelectItem value="silver">Plata</SelectItem>
+                <SelectItem value="gold">Oro</SelectItem>
+                <SelectItem value="platinum">Platino</SelectItem>
+                <SelectItem value="vip">VIP</SelectItem>
+              </SelectContent>
+            </Select>
           </div>
 
           {/* NIT */}
@@ -74,14 +84,19 @@ export const CustomerFormModal = ({ isOpen, onClose, customer }: CustomerFormMod
           {/* Fuente */}
           <div>
             <Label htmlFor="source">Fuente de Adquisición</Label>
-            <select id="source" defaultValue={customer?.source || 'web'} required className={selectClass}>
-              <option value="referral">Referido</option>
-              <option value="marketing">Marketing</option>
-              <option value="web">Sitio Web</option>
-              <option value="event">Evento</option>
-              <option value="cold-call">Llamada Fría</option>
-              <option value="other">Otro</option>
-            </select>
+            <Select defaultValue={customer?.source || 'web'}>
+              <SelectTrigger>
+                <SelectValue placeholder="Selecciona fuente" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="referral">Referido</SelectItem>
+                <SelectItem value="marketing">Marketing</SelectItem>
+                <SelectItem value="web">Sitio Web</SelectItem>
+                <SelectItem value="event">Evento</SelectItem>
+                <SelectItem value="cold-call">Llamada Fría</SelectItem>
+                <SelectItem value="other">Otro</SelectItem>
+              </SelectContent>
+            </Select>
           </div>
 
           {/* Email */}

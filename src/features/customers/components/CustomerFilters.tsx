@@ -1,5 +1,6 @@
 import { Search } from 'lucide-react'
 import { Input } from '@/components/ui/input'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import type { CustomerType, CustomerLevel, CustomerStatus } from '@/types'
 
 interface CustomerFiltersProps {
@@ -23,8 +24,6 @@ export const CustomerFilters = ({
   statusFilter,
   setStatusFilter,
 }: CustomerFiltersProps) => {
-  const selectClass = "h-11 w-full rounded-lg border-2 border-slate-200 bg-white px-4 py-2 text-sm text-slate-900 transition-all focus:border-cyan-500 focus:outline-none focus:ring-2 focus:ring-cyan-500/20"
-
   return (
     <div className="bg-white rounded-lg border border-slate-200 p-4">
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
@@ -41,44 +40,47 @@ export const CustomerFilters = ({
         </div>
 
         {/* Filtro por Tipo */}
-        <select
-          value={typeFilter}
-          onChange={(e) => setTypeFilter(e.target.value as CustomerType | 'all')}
-          className={selectClass}
-        >
-          <option value="all">Todos los tipos</option>
-          <option value="individual">Persona Natural</option>
-          <option value="small-business">Pequeña Empresa</option>
-          <option value="corporate">Corporativo</option>
-          <option value="government">Gobierno</option>
-        </select>
+        <Select value={typeFilter} onValueChange={(value) => setTypeFilter(value as CustomerType | 'all')}>
+          <SelectTrigger>
+            <SelectValue placeholder="Todos los tipos" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="all">Todos los tipos</SelectItem>
+            <SelectItem value="individual">Persona Natural</SelectItem>
+            <SelectItem value="small-business">Pequeña Empresa</SelectItem>
+            <SelectItem value="corporate">Corporativo</SelectItem>
+            <SelectItem value="government">Gobierno</SelectItem>
+          </SelectContent>
+        </Select>
 
         {/* Filtro por Nivel */}
-        <select
-          value={levelFilter}
-          onChange={(e) => setLevelFilter(e.target.value as CustomerLevel | 'all')}
-          className={selectClass}
-        >
-          <option value="all">Todos los niveles</option>
-          <option value="bronze">Bronce</option>
-          <option value="silver">Plata</option>
-          <option value="gold">Oro</option>
-          <option value="platinum">Platino</option>
-          <option value="vip">VIP</option>
-        </select>
+        <Select value={levelFilter} onValueChange={(value) => setLevelFilter(value as CustomerLevel | 'all')}>
+          <SelectTrigger>
+            <SelectValue placeholder="Todos los niveles" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="all">Todos los niveles</SelectItem>
+            <SelectItem value="bronze">Bronce</SelectItem>
+            <SelectItem value="silver">Plata</SelectItem>
+            <SelectItem value="gold">Oro</SelectItem>
+            <SelectItem value="platinum">Platino</SelectItem>
+            <SelectItem value="vip">VIP</SelectItem>
+          </SelectContent>
+        </Select>
 
         {/* Filtro por Estado */}
-        <select
-          value={statusFilter}
-          onChange={(e) => setStatusFilter(e.target.value as CustomerStatus | 'all')}
-          className={selectClass}
-        >
-          <option value="all">Todos los estados</option>
-          <option value="active">Activo</option>
-          <option value="at-risk">En Riesgo</option>
-          <option value="inactive">Inactivo</option>
-          <option value="lost">Perdido</option>
-        </select>
+        <Select value={statusFilter} onValueChange={(value) => setStatusFilter(value as CustomerStatus | 'all')}>
+          <SelectTrigger>
+            <SelectValue placeholder="Todos los estados" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="all">Todos los estados</SelectItem>
+            <SelectItem value="active">Activo</SelectItem>
+            <SelectItem value="at-risk">En Riesgo</SelectItem>
+            <SelectItem value="inactive">Inactivo</SelectItem>
+            <SelectItem value="lost">Perdido</SelectItem>
+          </SelectContent>
+        </Select>
       </div>
     </div>
   )

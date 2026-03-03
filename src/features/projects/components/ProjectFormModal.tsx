@@ -3,6 +3,7 @@ import { X, Save, Users, FileText, DollarSign, MapPin, Calendar, Briefcase } fro
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import type { Project, ProjectFormData, Client, Contract, ProjectType, ProjectStatus, Priority } from '@/types'
 import { useModal } from '@/hooks/useModal'
 
@@ -193,66 +194,73 @@ export const ProjectFormModal = ({ isOpen, onClose, project }: ProjectFormModalP
 
                 <div>
                   <Label htmlFor="type">Tipo de Proyecto *</Label>
-                  <select
-                    id="type"
+                  <Select
                     value={formData.type}
-                    onChange={(e) => setFormData({ ...formData, type: e.target.value as ProjectType })}
-                    className="h-11 w-full rounded-lg border-2 border-slate-200 bg-white px-4 py-2 text-sm text-slate-900 transition-all focus:border-cyan-500 focus:outline-none focus:ring-2 focus:ring-cyan-500/20"
-                    required
+                    onValueChange={(value) => setFormData({ ...formData, type: value as ProjectType })}
                   >
-                    <option value="construction">Construcción</option>
-                    <option value="remodeling">Remodelación</option>
-                    <option value="urbanization">Urbanización</option>
-                    <option value="other">Otro</option>
-                  </select>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Selecciona tipo" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="construction">Construcción</SelectItem>
+                      <SelectItem value="remodeling">Remodelación</SelectItem>
+                      <SelectItem value="urbanization">Urbanización</SelectItem>
+                      <SelectItem value="other">Otro</SelectItem>
+                    </SelectContent>
+                  </Select>
                 </div>
 
                 <div>
                   <Label htmlFor="status">Estado *</Label>
-                  <select
-                    id="status"
+                  <Select
                     value={formData.status}
-                    onChange={(e) => setFormData({ ...formData, status: e.target.value as ProjectStatus })}
-                    className="h-11 w-full rounded-lg border-2 border-slate-200 bg-white px-4 py-2 text-sm text-slate-900 transition-all focus:border-cyan-500 focus:outline-none focus:ring-2 focus:ring-cyan-500/20"
-                    required
+                    onValueChange={(value) => setFormData({ ...formData, status: value as ProjectStatus })}
                   >
-                    <option value="planning">Planeación</option>
-                    <option value="in-progress">En Curso</option>
-                    <option value="paused">Pausado</option>
-                    <option value="completed">Completado</option>
-                    <option value="cancelled">Cancelado</option>
-                  </select>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Selecciona estado" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="planning">Planeación</SelectItem>
+                      <SelectItem value="in-progress">En Curso</SelectItem>
+                      <SelectItem value="paused">Pausado</SelectItem>
+                      <SelectItem value="completed">Completado</SelectItem>
+                      <SelectItem value="cancelled">Cancelado</SelectItem>
+                    </SelectContent>
+                  </Select>
                 </div>
 
                 <div>
                   <Label htmlFor="priority">Prioridad *</Label>
-                  <select
-                    id="priority"
+                  <Select
                     value={formData.priority}
-                    onChange={(e) => setFormData({ ...formData, priority: e.target.value as Priority })}
-                    className="h-11 w-full rounded-lg border-2 border-slate-200 bg-white px-4 py-2 text-sm text-slate-900 transition-all focus:border-cyan-500 focus:outline-none focus:ring-2 focus:ring-cyan-500/20"
-                    required
+                    onValueChange={(value) => setFormData({ ...formData, priority: value as Priority })}
                   >
-                    <option value="low">Baja</option>
-                    <option value="medium">Media</option>
-                    <option value="high">Alta</option>
-                  </select>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Selecciona prioridad" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="low">Baja</SelectItem>
+                      <SelectItem value="medium">Media</SelectItem>
+                      <SelectItem value="high">Alta</SelectItem>
+                    </SelectContent>
+                  </Select>
                 </div>
 
                 <div>
                   <Label htmlFor="manager">Responsable *</Label>
-                  <select
-                    id="manager"
+                  <Select
                     value={formData.managerId}
-                    onChange={(e) => setFormData({ ...formData, managerId: e.target.value })}
-                    className="h-11 w-full rounded-lg border-2 border-slate-200 bg-white px-4 py-2 text-sm text-slate-900 transition-all focus:border-cyan-500 focus:outline-none focus:ring-2 focus:ring-cyan-500/20"
-                    required
+                    onValueChange={(value) => setFormData({ ...formData, managerId: value })}
                   >
-                    <option value="">Seleccionar...</option>
-                    {mockManagers.map(manager => (
-                      <option key={manager.id} value={manager.id}>{manager.name}</option>
-                    ))}
-                  </select>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Seleccionar..." />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {mockManagers.map(manager => (
+                        <SelectItem key={manager.id} value={manager.id}>{manager.name}</SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
                 </div>
               </div>
             </div>

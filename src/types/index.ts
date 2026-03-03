@@ -561,6 +561,7 @@ export interface ApprovalLevel {
   approvalDate?: string
   comments?: string
   responseTime?: number // horas
+  mode?: ApprovalMode // 'dependent' o 'independent'
 }
 
 export interface Request {
@@ -620,4 +621,38 @@ export interface RequestFormData {
   projectId?: string
   items: RequestItem[]
   requiredDate?: string
+}
+
+// ========================================
+// CONFIGURACIÓN DE FLUJOS DE APROBACIÓN
+// ========================================
+
+export type ApprovalMode = 'dependent' | 'independent'
+
+export interface Approver {
+  id: string
+  name: string
+  email: string
+  role: string
+  department?: string
+  isActive: boolean
+}
+
+export interface ApprovalRule {
+  minAmount?: number
+  maxAmount?: number
+  requiredApprovers: string[] // IDs de aprobadores
+}
+
+export interface RequestTypeConfig {
+  id: string
+  type: RequestType
+  name: string
+  description: string
+  approvalMode: ApprovalMode // 'dependent' o 'independent'
+  approvers: string[] // IDs de aprobadores disponibles
+  rules: ApprovalRule[] // Reglas según monto
+  isActive: boolean
+  createdAt: string
+  updatedAt: string
 }

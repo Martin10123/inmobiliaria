@@ -4,6 +4,7 @@ import { Plus } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import type { Request, RequestFormData, RequestStatus } from '@/types'
 import { mockRequests } from './data/mockRequests'
+import { generateApprovalFlow, isRequestFullyApproved } from './utils/flowService'
 import RequestStats from './components/RequestStats'
 import RequestTable from './components/RequestTable'
 import RequestDetailModal from './components/RequestDetailModal'
@@ -23,6 +24,11 @@ export default function RequestsPage() {
 
   // Crear nueva solicitud
   const handleCreateRequest = (formData: RequestFormData) => {
+    const estimatedAmount = formData.items.reduce((sum, item) => sum + (item.estimatedCost || 0), 0)
+    
+    // Determinar flujo de aprobación automáticamente según tipo y monto
+    const approvalFlow = generateApprovalFlow(formData.type, estimatedAmount)
+
     const newRequest: Request = {
       id: `${requests.length + 1}`,
       code: `REQ-2026-${String(requests.length + 1).padStart(3, '0')}`,
@@ -35,23 +41,16 @@ export default function RequestsPage() {
         role: 'Ingeniero'
       },
       requestedDate: new Date().toISOString(),
-      estimatedAmount: formData.items.reduce((sum, item) => sum + (item.estimatedCost || 0), 0),
-      approvalFlow: [
-        {
-          level: 1,
-          approverRole: 'Project Manager',
-          approverName: 'Carlos López',
-          approverId: 'usr-1',
-          status: 'pending'
-        }
-      ],
+      estimatedAmount,
+      approvalFlow,
       currentApprovalLevel: 1,
       history: [
         {
           date: new Date().toISOString(),
           user: 'Usuario Actual',
           action: 'Solicitud creada',
-          newStatus: 'pending'
+          newStatus: 'pending',
+          comments: `Requiere ${approvalFlow.length} nivel${approvalFlow.length > 1 ? 'es' : ''} de aprobación`
         }
       ],
       createdAt: new Date().toISOString(),
@@ -78,13 +77,14 @@ export default function RequestsPage() {
           : l
       )
 
-      const allApproved = updatedApprovalFlow.every(l => l.status === 'approved')
+      // Usar el servicio para determinar si está completamente aprobado
+      const fullyApproved = isRequestFullyApproved(updatedApprovalFlow)
       const nextLevel = updatedApprovalFlow.find(l => l.status === 'pending')
 
       return {
         ...request,
         approvalFlow: updatedApprovalFlow,
-        status: allApproved ? 'approved' : (nextLevel ? 'in_review' : request.status),
+        status: fullyApproved ? 'approved' : (nextLevel ? 'in_review' : request.status),
         currentApprovalLevel: nextLevel?.level || request.approvalFlow.length + 1,
         history: [
           ...request.history,
@@ -93,7 +93,7 @@ export default function RequestsPage() {
             user: updatedApprovalFlow.find(l => l.level === level)?.approverName || 'Usuario',
             action: `Aprobado en nivel ${level}`,
             previousStatus: request.status,
-            newStatus: allApproved ? 'approved' as RequestStatus : 'in_review' as RequestStatus,
+            newStatus: fullyApproved ? 'approved' as RequestStatus : 'in_review' as RequestStatus,
             comments
           }
         ],

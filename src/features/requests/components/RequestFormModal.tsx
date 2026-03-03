@@ -1,6 +1,9 @@
-import { useState } from 'react'
-import type { RequestType, Priority, RequestFormData, RequestItem } from '@/types'
+import { useState, useEffect } from 'react'
+import type { RequestType, Priority, RequestFormData, RequestItem, ApprovalLevel } from '@/types'
 import { Modal } from '@/components/ui/modal'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
+import { generateApprovalFlow } from '../utils/flowService'
+import { getEstimatedApprovalTime } from '../utils/approvalRules'
 
 interface RequestFormModalProps {
   isOpen: boolean
@@ -23,6 +26,17 @@ export default function RequestFormModal({ isOpen, onClose, onSubmit }: RequestF
     quantity: 1,
     unit: 'unidad'
   })
+
+  const [previewFlow, setPreviewFlow] = useState<ApprovalLevel[]>([])
+
+  // Calcular monto total y flujo de aprobación
+  const totalAmount = formData.items.reduce((sum, item) => sum + (item.estimatedCost || 0), 0)
+
+  // Actualizar flujo de aprobación cuando cambie el tipo o monto
+  useEffect(() => {
+    const flow = generateApprovalFlow(formData.type, totalAmount)
+    setPreviewFlow(flow)
+  }, [formData.type, totalAmount])
 
   const handleAddItem = () => {
     if (!newItem.name || !newItem.quantity) return
@@ -97,33 +111,39 @@ export default function RequestFormModal({ isOpen, onClose, onSubmit }: RequestF
             <label className="block text-sm font-medium text-gray-700 mb-2">
               Tipo de Solicitud *
             </label>
-            <select
+            <Select
               value={formData.type}
-              onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setFormData({ ...formData, type: e.target.value as RequestType })}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-              required
+              onValueChange={(value) => setFormData({ ...formData, type: value as RequestType })}
             >
-              <option value="material_requirement">Requerimiento de Materiales</option>
-              <option value="equipment_requirement">Requerimiento de Equipos</option>
-              <option value="loan">Préstamo de Equipo</option>
-              <option value="maintenance">Mantenimiento</option>
-            </select>
+              <SelectTrigger>
+                <SelectValue placeholder="Selecciona un tipo" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="material_requirement">Requerimiento de Materiales</SelectItem>
+                <SelectItem value="equipment_requirement">Requerimiento de Equipos</SelectItem>
+                <SelectItem value="loan">Préstamo de Equipo</SelectItem>
+                <SelectItem value="maintenance">Mantenimiento</SelectItem>
+              </SelectContent>
+            </Select>
           </div>
 
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
               Prioridad *
             </label>
-            <select
+            <Select
               value={formData.priority}
-              onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setFormData({ ...formData, priority: e.target.value as Priority })}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-              required
+              onValueChange={(value) => setFormData({ ...formData, priority: value as Priority })}
             >
-              <option value="low">Baja</option>
-              <option value="medium">Media</option>
-              <option value="high">Alta</option>
-            </select>
+              <SelectTrigger>
+                <SelectValue placeholder="Selecciona prioridad" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="low">Baja</SelectItem>
+                <SelectItem value="medium">Media</SelectItem>
+                <SelectItem value="high">Alta</SelectItem>
+              </SelectContent>
+            </Select>
           </div>
         </div>
 
@@ -290,6 +310,57 @@ export default function RequestFormModal({ isOpen, onClose, onSubmit }: RequestF
             </div>
           </div>
         </div>
+
+        {/* Preview del Flujo de Aprobación */}
+        {previewFlow.length > 0 && (
+          <div className="p-4 bg-blue-50 border border-blue-200 rounded-lg">
+            <h4 className="text-sm font-semibold text-gray-900 mb-3 flex items-center gap-2">
+              <svg className="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              Flujo de Aprobación
+            </h4>
+            
+            <div className="space-y-2 mb-3">
+              {previewFlow.map((level, index) => (
+                <div key={level.level} className="flex items-center gap-3">
+                  <div className="flex items-center justify-center w-6 h-6 rounded-full bg-blue-600 text-white text-xs font-bold">
+                    {level.level}
+                  </div>
+                  <div className="flex-1">
+                    <p className="text-sm font-medium text-gray-900">{level.approverName}</p>
+                    <p className="text-xs text-gray-600">{level.approverRole}</p>
+                  </div>
+                  {index < previewFlow.length - 1 && (
+                    <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                    </svg>
+                  )}
+                </div>
+              ))}
+            </div>
+
+            <div className="grid grid-cols-2 gap-3 pt-3 border-t border-blue-200">
+              <div className="text-center">
+                <p className="text-xs text-gray-600">Niveles de Aprobación</p>
+                <p className="text-lg font-bold text-blue-600">{previewFlow.length}</p>
+              </div>
+              <div className="text-center">
+                <p className="text-xs text-gray-600">Tiempo Estimado</p>
+                <p className="text-lg font-bold text-blue-600">{getEstimatedApprovalTime(previewFlow)} día{getEstimatedApprovalTime(previewFlow) > 1 ? 's' : ''}</p>
+              </div>
+            </div>
+
+            {totalAmount > 0 && (
+              <div className="mt-3 p-2 bg-white rounded border border-blue-200">
+                <p className="text-xs text-gray-600">Monto Total</p>
+                <p className="text-sm font-bold text-gray-900">
+                  ${totalAmount.toLocaleString('es-CO')} COP
+                </p>
+              </div>
+            )}
+          </div>
+        )}
 
         {/* Botones de acción */}
         <div className="flex gap-3 pt-4 border-t border-gray-200">

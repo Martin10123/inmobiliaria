@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Plus, Mail, Phone, Users, FileText, FileCheck, DollarSign, AlertTriangle, CheckCircle, Tag } from 'lucide-react'
 import { Button } from '@/components/ui/button'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import type { Customer, InteractionType } from '@/types'
 import {
   formatDate,
@@ -18,7 +19,6 @@ interface CustomerTimelineProps {
 
 export const CustomerTimeline = ({ customer }: CustomerTimelineProps) => {
   const [typeFilter, setTypeFilter] = useState<InteractionType | 'all'>('all')
-  const selectClass = "h-11 w-full rounded-lg border-2 border-slate-200 bg-white px-4 py-2 text-sm text-slate-900 transition-all focus:border-cyan-500 focus:outline-none focus:ring-2 focus:ring-cyan-500/20"
   
   const filteredInteractions = typeFilter === 'all'
     ? customer.interactions
@@ -57,21 +57,22 @@ export const CustomerTimeline = ({ customer }: CustomerTimelineProps) => {
       {/* Header con Filtros */}
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-4">
-          <select
-            value={typeFilter}
-            onChange={(e) => setTypeFilter(e.target.value as InteractionType | 'all')}
-            className={selectClass}
-          >
-            <option value="all">Todos los tipos</option>
-            <option value="meeting">Reuniones</option>
-            <option value="call">Llamadas</option>
-            <option value="email">Emails</option>
-            <option value="quote">Cotizaciones</option>
-            <option value="contract">Contratos</option>
-            <option value="payment">Pagos</option>
-            <option value="complaint">Reclamos</option>
-            <option value="follow-up">Seguimientos</option>
-          </select>
+          <Select value={typeFilter} onValueChange={(value) => setTypeFilter(value as InteractionType | 'all')}>
+            <SelectTrigger className="w-48">
+              <SelectValue placeholder="Todos los tipos" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">Todos los tipos</SelectItem>
+              <SelectItem value="meeting">Reuniones</SelectItem>
+              <SelectItem value="call">Llamadas</SelectItem>
+              <SelectItem value="email">Emails</SelectItem>
+              <SelectItem value="quote">Cotizaciones</SelectItem>
+              <SelectItem value="contract">Contratos</SelectItem>
+              <SelectItem value="payment">Pagos</SelectItem>
+              <SelectItem value="complaint">Reclamos</SelectItem>
+              <SelectItem value="follow-up">Seguimientos</SelectItem>
+            </SelectContent>
+          </Select>
           <span className="text-sm text-slate-600">
             {filteredInteractions.length} interacciones
           </span>

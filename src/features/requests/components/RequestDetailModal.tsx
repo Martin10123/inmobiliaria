@@ -1,14 +1,13 @@
 import { useState } from 'react'
 import type { Request } from '@/types'
 import { Modal } from '@/components/ui/modal'
+import ApprovalFlow from './ApprovalFlow'
 import {
   getRequestTypeLabel,
   getRequestStatusLabel,
   getPriorityLabel,
-  getApprovalStatusLabel,
   getRequestStatusColor,
   getPriorityColor,
-  getApprovalStatusColor,
   formatCurrency,
   formatDateTime,
   canBeApproved
@@ -142,47 +141,11 @@ export default function RequestDetailModal({
 
         {/* Flujo de Aprobación */}
         <div>
-          <h4 className="text-sm font-semibold text-gray-900 mb-3">Flujo de Aprobación</h4>
-          <div className="space-y-3">
-            {request.approvalFlow.map((level) => (
-              <div 
-                key={level.level}
-                className={`p-4 border rounded-lg ${
-                  level.status === 'pending' ? 'border-yellow-300 bg-yellow-50' :
-                  level.status === 'approved' ? 'border-green-300 bg-green-50' :
-                  'border-red-300 bg-red-50'
-                }`}
-              >
-                <div className="flex items-start justify-between">
-                  <div className="flex-1">
-                    <div className="flex items-center gap-3 mb-2">
-                      <span className="flex items-center justify-center w-8 h-8 rounded-full bg-white border-2 border-current text-sm font-bold">
-                        {level.level}
-                      </span>
-                      <div>
-                        <p className="font-medium text-gray-900">{level.approverName}</p>
-                        <p className="text-sm text-gray-600">{level.approverRole}</p>
-                      </div>
-                    </div>
-                    {level.comments && (
-                      <p className="text-sm text-gray-700 mt-2 ml-11">
-                        <span className="font-medium">Comentarios:</span> {level.comments}
-                      </p>
-                    )}
-                    {level.approvalDate && (
-                      <p className="text-xs text-gray-500 mt-1 ml-11">
-                        {formatDateTime(level.approvalDate)}
-                        {level.responseTime && ` • Tiempo de respuesta: ${level.responseTime.toFixed(1)} horas`}
-                      </p>
-                    )}
-                  </div>
-                  <span className={`px-3 py-1 text-xs font-medium rounded-full ${getApprovalStatusColor(level.status)}`}>
-                    {getApprovalStatusLabel(level.status)}
-                  </span>
-                </div>
-              </div>
-            ))}
-          </div>
+          <h4 className="text-sm font-semibold text-gray-900 mb-4">Flujo de Aprobación</h4>
+          <ApprovalFlow 
+            approvalFlow={request.approvalFlow} 
+            currentLevel={request.currentApprovalLevel} 
+          />
         </div>
 
         {/* Historial */}

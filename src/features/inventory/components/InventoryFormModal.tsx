@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { X } from 'lucide-react'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import type { InventoryItem, InventoryFormData, InventoryCategory } from '../../../types'
 import { getCategoryLabel } from '../utils/inventoryHelpers'
 import { useModal } from '../../../hooks/useModal'
@@ -162,38 +163,42 @@ export default function InventoryFormModal({
               <label className="block text-sm font-medium text-gray-700 mb-1">
                 Categoría *
               </label>
-              <select
-                name="category"
+              <Select
                 value={formData.category}
-                onChange={handleChange}
-                required
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                onValueChange={(value) => setFormData({ ...formData, category: value as InventoryCategory })}
               >
-                {categories.map((cat) => (
-                  <option key={cat} value={cat}>
-                    {getCategoryLabel(cat)}
-                  </option>
-                ))}
-              </select>
+                <SelectTrigger>
+                  <SelectValue placeholder="Selecciona categoría" />
+                </SelectTrigger>
+                <SelectContent>
+                  {categories.map((cat) => (
+                    <SelectItem key={cat} value={cat}>
+                      {getCategoryLabel(cat)}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             </div>
 
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
                 Unidad de Medida *
               </label>
-              <select
-                name="unit"
+              <Select
                 value={formData.unit}
-                onChange={handleChange}
-                required
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                onValueChange={(value) => setFormData({ ...formData, unit: value })}
               >
-                {units.map((unit) => (
-                  <option key={unit} value={unit}>
-                    {unit}
-                  </option>
-                ))}
-              </select>
+                <SelectTrigger>
+                  <SelectValue placeholder="Selecciona unidad" />
+                </SelectTrigger>
+                <SelectContent>
+                  {units.map((unit) => (
+                    <SelectItem key={unit} value={unit}>
+                      {unit}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             </div>
           </div>
 
