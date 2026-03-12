@@ -335,12 +335,12 @@ function EditApproversModal({
     <Modal
       isOpen={true}
       onClose={onClose}
-      title={`Aprobadores - ${config.label}`}
+      title={`Aprobadores - ${config.name}`}
       maxWidth="2xl"
     >
       <div className="p-6 space-y-4">
         <p className="text-sm text-gray-600">
-          Selecciona las personas que pueden aprobar solicitudes de tipo <span className="font-semibold">{config.label}</span>
+          Selecciona las personas que pueden aprobar solicitudes de tipo <span className="font-semibold">{config.name}</span>
         </p>
 
         {/* Grid de Aprobadores */}
