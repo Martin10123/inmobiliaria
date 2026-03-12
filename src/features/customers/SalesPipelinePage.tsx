@@ -7,6 +7,7 @@ import { mockOpportunities } from './data/mockOpportunities'
 import { PipelineMetrics } from './components/PipelineMetrics'
 import { PipelineKanban } from './components/PipelineKanban'
 import { OpportunityModal } from './components/OpportunityModal'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui'
 
 export const SalesPipelinePage = () => {
   const [opportunities, setOpportunities] = useState<Opportunity[]>(mockOpportunities)

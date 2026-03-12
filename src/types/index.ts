@@ -1,3 +1,6 @@
+// Tipos de autenticación
+export * from './auth'
+
 // Tipos de estado de proyectos
 export type ProjectStatus = 'planning' | 'in-progress' | 'paused' | 'completed' | 'cancelled'
 
